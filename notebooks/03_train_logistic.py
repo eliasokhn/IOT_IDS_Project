@@ -16,8 +16,12 @@
 # ---
 
 # %% — Setup
-import sys, os
-sys.path.insert(0, os.path.abspath(".."))
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+import os
 
 import logging, pickle
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
@@ -36,7 +40,7 @@ print_gpu_status(cfg)
 # benchmark_gpu(cfg)
 
 # %% — Load preprocessed splits
-with open("../data/processed/splits.pkl", "rb") as f:
+with open(str(PROJECT_ROOT / "data/processed/splits.pkl"), "rb") as f:
     splits = pickle.load(f)
 
 X_train = splits["X_train"]
@@ -56,8 +60,8 @@ from src.evaluation.metrics import compute_all_metrics, save_metrics
 from src.evaluation.plots import plot_confusion_matrix, plot_per_class_recall
 from src.data.label_mapping import get_class_names
 
-os.makedirs("../reports", exist_ok=True)
-os.makedirs("../models", exist_ok=True)
+os.makedirs(str(PROJECT_ROOT / "reports"), exist_ok=True)
+os.makedirs(str(PROJECT_ROOT / "models"), exist_ok=True)
 all_metrics = []
 
 # %% ════════════════════════════════════════════════════════════
@@ -74,7 +78,7 @@ y_test  = splits["y_test_binary"]
 # Pass pre-detected cfg to avoid re-running detection 6 times
 lr_binary = train_logistic_regression(
     X_train, y_train, task="binary",
-    config_path="../configs/model_config.yaml",
+    config_path=str(PROJECT_ROOT / "configs/model_config.yaml"),
     save=True, gpu_cfg=cfg,
 )
 
@@ -100,11 +104,11 @@ test_m = compute_all_metrics(y_test, y_test_pred, y_test_proba, class_names,
                               task="binary", model_name="lr")
 print(f"[TEST] Macro F1: {test_m['macro_f1']:.4f} | FPR Benign: {test_m['fpr_benign']:.4f}")
 
-save_metrics(test_m, "../reports/metrics_lr_binary.json")
+save_metrics(test_m, str(PROJECT_ROOT / "reports/metrics_lr_binary.json"))
 plot_confusion_matrix(
     test_m["confusion_matrix"], test_m["confusion_matrix_labels"],
     title="LR — Binary — Confusion Matrix (Test Set)",
-    save_path="../reports/cm_lr_binary.png", normalize=True,
+    save_path=str(PROJECT_ROOT / "reports/cm_lr_binary.png"), normalize=True,
 )
 all_metrics.append(test_m)
 
@@ -121,7 +125,7 @@ y_test  = splits["y_test_8class"]
 
 lr_8class = train_logistic_regression(
     X_train, y_train, task="8class",
-    config_path="../configs/model_config.yaml",
+    config_path=str(PROJECT_ROOT / "configs/model_config.yaml"),
     save=True, gpu_cfg=cfg,
 )
 
@@ -135,15 +139,15 @@ test_m = compute_all_metrics(y_test, y_test_pred, y_test_proba, class_names,
                               task="8class", model_name="lr")
 print(f"[TEST] Macro F1: {test_m['macro_f1']:.4f}")
 
-save_metrics(test_m, "../reports/metrics_lr_8class.json")
+save_metrics(test_m, str(PROJECT_ROOT / "reports/metrics_lr_8class.json"))
 plot_confusion_matrix(
     test_m["confusion_matrix"], test_m["confusion_matrix_labels"],
     title="LR — 8-class — Confusion Matrix (Test Set)",
-    save_path="../reports/cm_lr_8class.png", normalize=True,
+    save_path=str(PROJECT_ROOT / "reports/cm_lr_8class.png"), normalize=True,
 )
 plot_per_class_recall(test_m["per_class"],
     title="LR — 8-class — Per-Class Recall",
-    save_path="../reports/recall_lr_8class.png")
+    save_path=str(PROJECT_ROOT / "reports/recall_lr_8class.png"))
 all_metrics.append(test_m)
 
 # %% ════════════════════════════════════════════════════════════
@@ -159,7 +163,7 @@ y_test  = splits["y_test_34class"]
 
 lr_34class = train_logistic_regression(
     X_train, y_train, task="34class",
-    config_path="../configs/model_config.yaml",
+    config_path=str(PROJECT_ROOT / "configs/model_config.yaml"),
     save=True, gpu_cfg=cfg,
 )
 
@@ -173,15 +177,15 @@ test_m = compute_all_metrics(y_test, y_test_pred, y_test_proba, class_names,
                               task="34class", model_name="lr")
 print(f"[TEST] Macro F1: {test_m['macro_f1']:.4f}")
 
-save_metrics(test_m, "../reports/metrics_lr_34class.json")
+save_metrics(test_m, str(PROJECT_ROOT / "reports/metrics_lr_34class.json"))
 plot_confusion_matrix(
     test_m["confusion_matrix"], test_m["confusion_matrix_labels"],
     title="LR — 34-class — Confusion Matrix (Test Set)",
-    save_path="../reports/cm_lr_34class.png", normalize=True, figsize=(16,14),
+    save_path=str(PROJECT_ROOT / "reports/cm_lr_34class.png"), normalize=True, figsize=(16,14),
 )
 plot_per_class_recall(test_m["per_class"],
     title="LR — 34-class — Per-Class Recall",
-    save_path="../reports/recall_lr_34class.png", figsize=(20, 5))
+    save_path=str(PROJECT_ROOT / "reports/recall_lr_34class.png"), figsize=(20, 5))
 all_metrics.append(test_m)
 
 # %% — Summary

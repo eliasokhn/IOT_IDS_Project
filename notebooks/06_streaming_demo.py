@@ -9,8 +9,12 @@
 # ---
 
 # %% — Setup
-import sys, os
-sys.path.insert(0, os.path.abspath(".."))
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+import os
 
 import logging, pickle, json
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
@@ -24,7 +28,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # %% — Load split data and trained model
-with open("../data/processed/splits.pkl", "rb") as f:
+with open(str(PROJECT_ROOT / "data/processed/splits.pkl"), "rb") as f:
     splits = pickle.load(f)
 
 X_test_raw = splits["X_test_raw"]     # unscaled, as DataFrame
@@ -38,7 +42,7 @@ from src.serving.predictor import Predictor
 
 try:
     predictor = Predictor.load(
-        artifacts_dir="../models",
+        artifacts_dir=str(PROJECT_ROOT / "models"),
         task="binary",
         model_name="gb",
     )
@@ -79,7 +83,7 @@ monitor = DriftMonitor.from_training_data(
     z_threshold=3.0,
     alert_rate_warning=0.30,
     alert_rate_critical=0.60,
-    log_dir="../reports/monitoring_logs",
+    log_dir=str(PROJECT_ROOT / "reports/monitoring_logs"),
 )
 print(f"DriftMonitor tracking features: {monitor.top_features}")
 
@@ -96,7 +100,7 @@ monitor_normal = DriftMonitor.from_training_data(
     X_train=X_train_raw_sample,
     n_top_features=5,
     baseline_alert_rate=0.05,
-    log_dir="../reports/monitoring_logs",
+    log_dir=str(PROJECT_ROOT / "reports/monitoring_logs"),
 )
 
 results_normal = run_simulation(
@@ -114,7 +118,7 @@ print(f"\nNormal scenario summary:")
 print(json.dumps(results_normal["drift_summary"], indent=2))
 
 monitor_normal.plot_alert_rate(
-    save_path="../reports/monitoring_plots/alert_rate_normal.png"
+    save_path=str(PROJECT_ROOT / "reports/monitoring_plots/alert_rate_normal.png")
 )
 
 # %% ─────────────────────────────────────────────────────────────
@@ -128,7 +132,7 @@ monitor_surge = DriftMonitor.from_training_data(
     X_train=X_train_raw_sample,
     n_top_features=5,
     baseline_alert_rate=0.05,
-    log_dir="../reports/monitoring_logs",
+    log_dir=str(PROJECT_ROOT / "reports/monitoring_logs"),
 )
 
 results_surge = run_simulation(
@@ -149,7 +153,7 @@ print(f"\nSurge scenario summary:")
 print(json.dumps(results_surge["drift_summary"], indent=2))
 
 monitor_surge.plot_alert_rate(
-    save_path="../reports/monitoring_plots/alert_rate_surge.png"
+    save_path=str(PROJECT_ROOT / "reports/monitoring_plots/alert_rate_surge.png")
 )
 
 # %% ─────────────────────────────────────────────────────────────
@@ -163,7 +167,7 @@ monitor_drift = DriftMonitor.from_training_data(
     X_train=X_train_raw_sample,
     n_top_features=5,
     baseline_alert_rate=0.05,
-    log_dir="../reports/monitoring_logs",
+    log_dir=str(PROJECT_ROOT / "reports/monitoring_logs"),
 )
 
 results_drift = run_simulation(
@@ -183,7 +187,7 @@ print(f"\nGradual drift summary:")
 print(json.dumps(results_drift["drift_summary"], indent=2))
 
 monitor_drift.plot_alert_rate(
-    save_path="../reports/monitoring_plots/alert_rate_gradual.png"
+    save_path=str(PROJECT_ROOT / "reports/monitoring_plots/alert_rate_gradual.png")
 )
 
 # Plot feature drift for one tracked feature
@@ -191,7 +195,7 @@ if monitor_drift.top_features:
     feat = monitor_drift.top_features[0]
     monitor_drift.plot_feature_drift(
         feature=feat,
-        save_path=f"../reports/monitoring_plots/feature_drift_{feat}.png",
+        save_path=str(PROJECT_ROOT / f"reports/monitoring_plots/feature_drift_{feat}.png"),
     )
 
 # %% — Side-by-side comparison of all 3 scenarios
@@ -220,8 +224,8 @@ axes[0].set_ylabel("Alert Rate")
 fig.suptitle("Streaming Alert Rate — 3 Scenarios", fontsize=13, fontweight="bold")
 plt.tight_layout()
 
-os.makedirs("../reports/monitoring_plots", exist_ok=True)
-fig.savefig("../reports/monitoring_plots/scenarios_comparison.png", dpi=150, bbox_inches="tight")
+os.makedirs(str(PROJECT_ROOT / "reports/monitoring_plots"), exist_ok=True)
+fig.savefig(str(PROJECT_ROOT / "reports/monitoring_plots/scenarios_comparison.png"), dpi=150, bbox_inches="tight")
 plt.close(fig)
 print("\nScenario comparison plot saved.")
 

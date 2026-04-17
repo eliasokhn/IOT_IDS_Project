@@ -1,5 +1,5 @@
 """
-run_pipeline.py  (v2 — fixed)
+run_pipeline.py
 ==============================
 One-command full pipeline. Includes all three fixes:
   - FIX 1: deduplication before splitting

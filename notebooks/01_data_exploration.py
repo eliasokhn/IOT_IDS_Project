@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Notebook 01 — Data Exploration  (v2 — real CICIoT2023 aware)
+# # Notebook 01 — Data Exploration
 #
 # **What this notebook does:**
 # 1. Merges your 63 Merged*.csv files into one Parquet (run once, skips if exists)
@@ -21,8 +21,12 @@
 # ---
 
 # %% — Setup
-import sys, os
-sys.path.insert(0, os.path.abspath(".."))
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+import os
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
@@ -40,7 +44,7 @@ warnings.filterwarnings("ignore")
 #   USE_DEMO = True   →  uses synthetic data, no download needed
 #   USE_DEMO = False  →  uses your real 63 Merged*.csv files
 # ──────────────────────────────────────────────────────────────────
-USE_DEMO = True
+USE_DEMO = False
 
 # Memory setting — how much of each class to load
 # Free Colab:  0.05–0.10 (safe)
@@ -60,12 +64,12 @@ else:
     print("Using real CICIoT2023 dataset from data/raw/")
     # Step 1: merge 63 CSV files into one Parquet (runs once, skips if done)
     build_merged_parquet(
-        raw_dir="../data/raw",
-        output_path="../data/processed/merged.parquet",
+        raw_dir=str(PROJECT_ROOT / "data/raw"),
+        output_path=str(PROJECT_ROOT / "data/processed/merged.parquet"),
     )
     # Step 2: load with stratified sampling
     df_raw = load_dataset(
-        parquet_path="../data/processed/merged.parquet",
+        parquet_path=str(PROJECT_ROOT / "data/processed/merged.parquet"),
         sample_frac=SAMPLE_FRAC,
         random_state=42,
     )
@@ -138,8 +142,8 @@ ax.legend(handles=[
     Patch(color="#F44336", label="<100 rows (rare — all kept by sampler)"),
 ], fontsize=9)
 plt.tight_layout()
-os.makedirs("../reports", exist_ok=True)
-fig.savefig("../reports/class_distribution.png", dpi=150, bbox_inches="tight")
+os.makedirs(str(PROJECT_ROOT / "reports"), exist_ok=True)
+fig.savefig(str(PROJECT_ROOT / "reports/class_distribution.png"), dpi=150, bbox_inches="tight")
 plt.show()
 print("Saved: reports/class_distribution.png")
 
@@ -169,9 +173,9 @@ for idx, cnt in cat_dist.items():
     print(f"  {idx}. {name:<12}: {cnt:>8,}")
 
 # Save
-os.makedirs("../data/processed", exist_ok=True)
+os.makedirs(str(PROJECT_ROOT / "data/processed"), exist_ok=True)
 import pickle
-with open("../data/processed/dataset_labelled.pkl", "wb") as f:
+with open(str(PROJECT_ROOT / "data/processed/dataset_labelled.pkl"), "wb") as f:
     pickle.dump(df, f)
 print("\nSaved: data/processed/dataset_labelled.pkl")
 print("Run notebook 02 next.")

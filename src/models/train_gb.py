@@ -75,7 +75,7 @@ def train_gradient_boosting(
     Fitted model — LightGBM Booster, XGBoost Booster, or sklearn HistGBM.
     All wrapped in a SklearnWrapper for .predict() and .predict_proba() API.
     """
-    with open(config_path) as f:
+    with open(config_path, encoding="utf-8") as f:
         config = yaml.safe_load(f)
 
     gb_cfg        = config["gradient_boosting"]

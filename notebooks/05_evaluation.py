@@ -6,8 +6,12 @@
 # ---
 
 # %% — Setup
-import sys, os
-sys.path.insert(0, os.path.abspath(".."))
+import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+import os
 
 import logging
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
@@ -21,7 +25,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # %% — Load all saved metrics
-metrics_files = sorted(glob.glob("../reports/metrics_*.json"))
+metrics_files = sorted(glob.glob(str(PROJECT_ROOT / "reports/metrics_*.json")))
 print(f"Found {len(metrics_files)} metrics files:")
 for f in metrics_files:
     print(f"  {f}")
@@ -45,7 +49,7 @@ print("MODEL COMPARISON TABLE (Primary metric: Macro F1)")
 print("="*70)
 print(comparison_df.to_string(index=False))
 
-comparison_df.to_csv("../reports/model_comparison.csv", index=False)
+comparison_df.to_csv(str(PROJECT_ROOT / "reports/model_comparison.csv"), index=False)
 print("\nComparison table saved to reports/model_comparison.csv")
 
 # %% — Comparison bar chart
@@ -53,13 +57,13 @@ from src.evaluation.plots import plot_model_comparison
 
 plot_model_comparison(
     comparison_df,
-    save_path="../reports/comparison_macro_f1.png",
+    save_path=str(PROJECT_ROOT / "reports/comparison_macro_f1.png"),
     metric="macro_f1",
 )
 
 plot_model_comparison(
     comparison_df,
-    save_path="../reports/comparison_accuracy.png",
+    save_path=str(PROJECT_ROOT / "reports/comparison_accuracy.png"),
     metric="accuracy",
 )
 print("Comparison plots saved.")
@@ -84,7 +88,7 @@ if len(fpr_rows) > 0:
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.001,
                 f"{val:.4f}", ha="center", va="bottom", fontsize=8)
     plt.tight_layout()
-    fig.savefig("../reports/fpr_comparison.png", dpi=150, bbox_inches="tight")
+    fig.savefig(str(PROJECT_ROOT / "reports/fpr_comparison.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
     print("FPR comparison plot saved.")
 

@@ -60,7 +60,7 @@ def train_logistic_regression(
     -------
     Fitted model — cuML or sklearn, both have .predict() and .predict_proba()
     """
-    with open(config_path) as f:
+    with open(config_path, encoding="utf-8") as f:
         config = yaml.safe_load(f)
 
     lr_cfg        = config["logistic_regression"]
