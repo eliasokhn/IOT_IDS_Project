@@ -1,0 +1,27 @@
+dataset:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  merged_parquet: "data/processed/merged.parquet"
+  split_indices: "data/processed/split_indices.pkl"
+  sample_frac: 0.10          # use 10% per class for Colab memory safety
+  random_state: 42
+
+split:
+  train_frac: 0.70
+  val_frac: 0.15
+  test_frac: 0.15
+  stratify_on: "label_fine"  # always split on 34-class labels
+
+features:
+  drop_cols:
+    - "label"
+    - "label_binary"
+    - "label_category"
+    - "label_fine"
+  inf_fill_strategy: "col_max"   # replace inf with column max
+  nan_fill_strategy: "median"    # fill NaN with column median
+
+label_columns:
+  binary: "label_binary"
+  category: "label_category"
+  fine: "label_fine"

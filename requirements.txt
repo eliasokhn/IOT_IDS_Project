@@ -1,0 +1,47 @@
+# ── Core ML / Data ─────────────────────────────────────────────────────────────
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.5.0
+matplotlib==3.9.0
+seaborn==0.13.2
+joblib==1.4.2
+scipy==1.13.1
+pyarrow==16.1.0
+tqdm==4.66.4
+pyyaml==6.0.1
+
+# ── API / Serving ──────────────────────────────────────────────────────────────
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+pydantic==2.7.1
+httpx==0.27.0
+
+# ── Testing ────────────────────────────────────────────────────────────────────
+pytest==8.2.2
+
+# ── GPU — OPTIONAL (install the ones matching your setup) ─────────────────────
+#
+# Option A: LightGBM with GPU support (easiest — works on most systems)
+#   Windows/Linux: pip install lightgbm
+#   NOTE: LightGBM GPU requires CUDA toolkit installed on your system.
+#         The pip package auto-detects GPU. If GPU is not found, it runs on CPU.
+# lightgbm>=4.3.0
+#
+# Option B: XGBoost with GPU support (fallback)
+#   pip install xgboost
+#   GPU support is built-in since XGBoost 1.6
+# xgboost>=2.0.0
+#
+# Option C: RAPIDS cuML (best GPU acceleration, requires NVIDIA GPU + Linux)
+#   Install via conda:
+#     conda install -c rapidsai -c conda-forge cuml=24.04 python=3.11 cuda-version=12.0
+#   Or via pip (CUDA 12):
+#     pip install cuml-cu12
+#   NOT available on Windows natively. Use WSL2 on Windows.
+# cuml-cu12>=24.04
+#
+# ── IMPORTANT: Do NOT uncomment these lines blindly ───────────────────────────
+# The GPU libraries have strict CUDA version requirements.
+# Check your CUDA version first: nvidia-smi
+# Then install the matching version of each library.
+# The code will automatically detect what is available and fall back to CPU.

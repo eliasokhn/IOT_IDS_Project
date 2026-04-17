@@ -1,0 +1,15 @@
+streaming:
+  micro_batch_size: 500
+  n_batches: 100
+  random_state: 42
+
+drift:
+  z_score_threshold: 3.0
+  alert_rate_warning: 0.30    # warn if >30% of batch flagged malicious
+  alert_rate_critical: 0.60   # critical if >60%
+  n_top_features: 5           # track drift in top-N features by variance
+
+monitoring:
+  log_dir: "reports/monitoring_logs"
+  save_plots: true
+  plot_dir: "reports/monitoring_plots"
