@@ -3,7 +3,7 @@ dataset:
   processed_dir: "data/processed"
   merged_parquet: "data/processed/merged.parquet"
   split_indices: "data/processed/split_indices.pkl"
-  sample_frac: 0.10          # use 10% per class for Colab memory safety
+  sample_frac: 0.25          # use 25% per class — representative while manageable
   random_state: 42
 
 split:

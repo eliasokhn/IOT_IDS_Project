@@ -53,3 +53,7 @@ logs/
 
 # Docker
 .dockerignore
+
+#Documentation 
+CLAUDE.md
+/.claude

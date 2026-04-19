@@ -112,7 +112,7 @@ def load_dataset(
     parquet_path  : path to merged Parquet file (created by build_merged_parquet)
     sample_frac   : fraction of rows to keep PER CLASS after deduplication.
                     None = keep all rows.
-                    Recommended: 0.10 for Colab free tier, 0.20 for Colab Pro.
+                    Recommended: 0.25 for local/Colab Pro, 0.10 for Colab free tier.
     random_state  : reproducibility seed
 
     Returns

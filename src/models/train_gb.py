@@ -226,7 +226,7 @@ def _train_lightgbm_gpu(
             "verbose":           -1,
             # Stability — prevent NaN loss
             "min_gain_to_split": 0.0,
-            "max_bin":           255,     # histogram bins — reduce to 63 if OOM
+            "max_bin":           63,      # 63 bins more robust to extreme outliers on GPU
         }
         # Remove None values
         params = {k: v for k, v in params.items() if v is not None}
