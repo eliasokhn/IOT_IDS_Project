@@ -1,9 +1,9 @@
 # Logistic Regression
 logistic_regression:
   C: 1.0
-  max_iter: 1000
+  max_iter: 300
   class_weight: "balanced"
-  solver: "saga"
+  solver: "lbfgs"
   n_jobs: -1
   random_state: 42
 

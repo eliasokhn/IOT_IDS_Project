@@ -1,35 +1,4 @@
-"""
-preprocessing.py  (v2 — fixed)
-================================
-Three bugs fixed based on real CICIoT2023 data inspection:
-
-FIX 1 — DUPLICATES
-  Problem : ~5% exact duplicate rows per file, plus 997 feature vectors
-            per file that map to two different labels (DDOS-UDP_FLOOD vs
-            DOS-UDP_FLOOD with identical features). Duplicates in the test
-            set inflate binary accuracy and confuse 34-class boundaries.
-  Fix     : deduplicate() removes exact dups (Stage A) and resolves
-            conflicting-label dups by majority vote / rarer-class tie-break
-            (Stage B). Uses hash-based grouping — safe for pandas 3.x.
-            Must be called BEFORE create_splits().
-
-FIX 2 — PROTOCOL TYPE (ordinal → one-hot)
-  Problem : Values {0,1,6,17,47} are IP protocol numbers.
-            StandardScaler treats them as continuous — implies
-            GRE(47) = 47x Other(0). Dominant spurious feature
-            that misleads LR and hurts 34-class separation.
-  Fix     : One-hot encode into 5 binary columns: proto_0, proto_1,
-            proto_6, proto_17, proto_47. Numeric value dropped.
-
-FIX 3 — VARIANCE COLUMN + SCALER
-  Problem : Variance = Std^2 exactly (max diff < 1e-8, verified on
-            Merged52.csv). Pure redundancy. Extreme outlier source:
-            range 0 to 46,402,130 with median 0. StandardScaler
-            produces near-infinite scaled values that distort LR.
-  Fix     : Drop Variance. Switch to RobustScaler (median + IQR)
-            which is resilient to remaining outliers in Rate, IAT, etc.
-            GB is immune either way; LR benefits significantly.
-"""
+"""preprocessing.py"""
 
 import hashlib
 import logging
@@ -47,18 +16,14 @@ VARIANCE_COL      = "Variance"
 ALL_LABEL_COLS    = ["label", "label_binary", "label_category",
                      "label_fine", "Label", "_feat_hash"]
 
+CLIP_AFTER_SCALE  = 20.0
+
 
 class Preprocessor:
     """
     Stateful preprocessor. Fit on training data only, transform any split.
 
-    Pipeline (in order):
-      1. Drop Variance column (= Std^2, redundant + extreme outlier source)
-      2. One-hot encode Protocol Type  (categorical, NOT ordinal)
-      3. Replace ±inf with column finite-max  (computed from training data)
-      4. Median-impute remaining NaNs         (computed from training data)
-      5. RobustScaler (median + IQR — resilient to outliers)
-
+    Stateful preprocessor: fit on training data only, transform any split.
     Save / load with save() / load() to guarantee identical preprocessing
     at training time and inference time.
     """
@@ -107,7 +72,8 @@ class Preprocessor:
         X_prep    = self._structural_fixes(X, fit_mode=False)
         X_no_inf  = self._replace_inf(X_prep)
         X_imputed = self._impute(X_no_inf)
-        return self.scaler.transform(X_imputed)
+        scaled    = self.scaler.transform(X_imputed)
+        return np.clip(scaled, -CLIP_AFTER_SCALE, CLIP_AFTER_SCALE)
 
     def fit_transform(self, X: pd.DataFrame) -> np.ndarray:
         """Fit and transform in one step. Use on training data only."""

@@ -3,7 +3,7 @@ dataset:
   processed_dir: "data/processed"
   merged_parquet: "data/processed/merged.parquet"
   split_indices: "data/processed/split_indices.pkl"
-  sample_frac: 0.25          # use 25% per class — representative while manageable
+  sample_frac: 0.30          # use 30% per class — representative while manageable
   random_state: 42
 
 split:

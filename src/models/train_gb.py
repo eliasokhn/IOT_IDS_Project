@@ -114,7 +114,7 @@ def train_gradient_boosting(
     if gpu_cfg.backend in (BACKEND_LGBM, BACKEND_CUML):
         model = _train_lightgbm_gpu(X_train, y_train, gb_cfg, gpu_cfg, task, n_classes)
 
-    if model is None and gpu_cfg.backend == BACKEND_XGB:
+    if model is None and gpu_cfg.backend in (BACKEND_LGBM, BACKEND_CUML, BACKEND_XGB):
         model = _train_xgboost_gpu(X_train, y_train, gb_cfg, gpu_cfg, task, n_classes)
 
     if model is None:

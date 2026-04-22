@@ -10,7 +10,7 @@ Usage
 -----
     python run_pipeline.py                  # demo data, all tasks
     python run_pipeline.py --real-data      # real 63 CSV files
-    python run_pipeline.py --sample-frac 0.25  # use 25% per class (default)
+    python run_pipeline.py --sample-frac 0.30  # use 30% per class (default)
     python run_pipeline.py --skip-train     # skip training, run evaluation only
 """
 
@@ -27,7 +27,7 @@ def parse_args():
     p = argparse.ArgumentParser(description="IoT IDS Full Pipeline v2")
     p.add_argument("--real-data",    action="store_true")
     p.add_argument("--skip-train",   action="store_true")
-    p.add_argument("--sample-frac",  type=float, default=0.25)
+    p.add_argument("--sample-frac",  type=float, default=0.30)
     p.add_argument("--tasks",   nargs="+", default=["binary","8class","34class"])
     p.add_argument("--models",  nargs="+", default=["lr","gb"])
     return p.parse_args()
