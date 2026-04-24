@@ -196,7 +196,7 @@ def sample_stratified(
             log.info(f"  {cls:<40} {total:>7,} total -> sampled {n:>7,}")
 
     result = pd.concat(frames, ignore_index=True)
-    result = result.sample(frac=1.0, random_state=random_state).reset_index(drop=True)
+    result = result.reset_index(drop=True)
     log.info(f"Sampled total: {len(result):,} rows")
     return result
 
@@ -269,3 +269,73 @@ def generate_demo_data(n_samples: int = 50_000, random_state: int = 42) -> pd.Da
     df = df.sample(frac=1.0, random_state=random_state).reset_index(drop=True)
     log.info(f"Generated synthetic demo dataset: {df.shape}")
     return df
+
+
+def sample_balanced(
+    df: pd.DataFrame,
+    label_col: str = "label",
+    random_state: int = 42,
+    floor: int = 2000,
+    ceiling: int = 80_000,
+) -> pd.DataFrame:
+    """
+    Targeted oversampling + capped undersampling.
+    Applied ONLY to the training split after create_splits().
+    Val and test always keep real rows only.
+
+    - Classes with fewer than floor rows: oversample WITH replacement to floor
+    - Classes with more than ceiling rows: undersample WITHOUT replacement to ceiling
+    - Classes between floor and ceiling: kept as-is
+
+    Parameters
+    ----------
+    df           : training split dataframe (NOT the full dataset)
+    label_col    : label column name
+    random_state : seed
+    floor        : minimum rows per class after balancing
+    ceiling      : maximum rows per class after balancing
+    """
+    rng    = np.random.RandomState(random_state)
+    frames = []
+    class_counts = df[label_col].value_counts()
+
+    log.info(f"Balanced sampling (TRAIN only): floor={floor:,}  ceiling={ceiling:,}")
+    log.info(f"{'Class':<42} {'Real':>8} {'Sampled':>8}  Action")
+    log.info("-" * 72)
+
+    n_over = n_under = n_keep = 0
+
+    for cls, real_count in class_counts.items():
+        class_df = df[df[label_col] == cls]
+        seed     = rng.randint(0, 99_999)
+
+        if real_count < floor:
+            sampled = class_df.sample(n=floor, replace=True, random_state=seed)
+            action  = "OVERSAMPLE"
+            n_over += 1
+        elif real_count > ceiling:
+            sampled = class_df.sample(n=ceiling, replace=False, random_state=seed)
+            action  = "UNDERSAMPLE"
+            n_under += 1
+        else:
+            sampled = class_df
+            action  = "keep"
+            n_keep += 1
+
+        frames.append(sampled)
+        log.info(f"  {cls:<42} {real_count:>8,} {len(sampled):>8,}  {action}")
+
+    result = pd.concat(frames, ignore_index=True)
+    result = result.reset_index(drop=True)
+
+    log.info("-" * 72)
+    log.info(f"Oversampled: {n_over}  Undersampled: {n_under}  Kept: {n_keep}")
+    log.info(f"Final balanced train size: {len(result):,} rows")
+
+    very_rare = [(c, cnt) for c, cnt in class_counts.items() if cnt < 100]
+    if very_rare:
+        log.warning(
+            f"Very rare classes heavily oversampled (<100 real rows): "
+            f"{[c for c, _ in very_rare]}. Interpret their recall cautiously."
+        )
+    return result

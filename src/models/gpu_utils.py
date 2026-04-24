@@ -474,7 +474,7 @@ def atomic_save(obj: Any, path: str, min_disk_gb: float = 2.0) -> None:
     tmp_path = path.with_suffix(".tmp")
     try:
         joblib.dump(obj, str(tmp_path))
-        os.replace(str(tmp_path), str(path))  # atomic on Linux, overwrites on Windows
+        tmp_path.replace(path)
         log.info(f"Saved (atomic): {path}")
     except Exception as e:
         if tmp_path.exists():

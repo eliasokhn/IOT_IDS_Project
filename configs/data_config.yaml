@@ -3,14 +3,21 @@ dataset:
   processed_dir: "data/processed"
   merged_parquet: "data/processed/merged.parquet"
   split_indices: "data/processed/split_indices.pkl"
-  sample_frac: 0.30          # use 30% per class — representative while manageable
   random_state: 42
+
+  # Sampling strategy
+  # sample_mode: "balanced"   <- RECOMMENDED (fixes imbalance properly)
+  # sample_mode: "stratified" <- simpler, keeps raw imbalance ratio
+  sample_mode: "balanced"
+  sample_frac: 0.30           # only used when sample_mode is "stratified"
+  balanced_floor: 2000        # rare classes oversampled to this (train only)
+  balanced_ceiling: 80000     # dominant classes capped at this (6GB VRAM safe)
 
 split:
   train_frac: 0.70
   val_frac: 0.15
   test_frac: 0.15
-  stratify_on: "label_fine"  # always split on 34-class labels
+  stratify_on: "label_fine"
 
 features:
   drop_cols:
@@ -18,8 +25,8 @@ features:
     - "label_binary"
     - "label_category"
     - "label_fine"
-  inf_fill_strategy: "col_max"   # replace inf with column max
-  nan_fill_strategy: "median"    # fill NaN with column median
+  inf_fill_strategy: "col_max"
+  nan_fill_strategy: "median"
 
 label_columns:
   binary: "label_binary"

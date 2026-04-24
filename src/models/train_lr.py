@@ -126,17 +126,10 @@ def _build_gpu_cfg(gpu_section: dict, model_cfg: dict) -> GpuConfig:
     )
 
 
-def _compute_sample_weights(y: np.ndarray) -> np.ndarray:
-    from sklearn.utils.class_weight import compute_sample_weight
-    return compute_sample_weight(class_weight="balanced", y=y).astype(np.float32)
-
-
 def _train_cuml_lr(X_train, y_train, lr_cfg, gpu_cfg: GpuConfig, task: str):
     """GPU path: cuML LogisticRegression."""
     try:
         from cuml.linear_model import LogisticRegression as cuLR  # type: ignore
-
-        sample_weights = _compute_sample_weights(y_train)
 
         with gpu_memory_context(gpu_cfg, f"cuML LR {task}"):
             model = cuLR(
@@ -147,7 +140,7 @@ def _train_cuml_lr(X_train, y_train, lr_cfg, gpu_cfg: GpuConfig, task: str):
                 verbose=False,
             )
             start = time.time()
-            model.fit(X_train, y_train, sample_weight=sample_weights)
+            model.fit(X_train, y_train)
             elapsed = time.time() - start
             log.info(f"cuML LR done in {elapsed:.1f}s (GPU)")
 

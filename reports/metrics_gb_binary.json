@@ -1,39 +1,39 @@
 {
   "model": "gb",
   "task": "binary",
-  "n_samples": 1028148,
-  "accuracy": 0.9742167470052949,
-  "macro_f1": 0.883217983785474,
-  "weighted_f1": 0.9768500111640226,
+  "n_samples": 841523,
+  "accuracy": 0.9698546563789701,
+  "macro_f1": 0.8659584547423241,
+  "weighted_f1": 0.9733865918209131,
   "per_class": {
     "Benign": {
-      "precision": 0.6405911598447184,
-      "recall": 0.9973914149983033,
-      "f1": 0.780130549818773,
-      "support": 47152
+      "precision": 0.5982421005785492,
+      "recall": 0.9975881261595547,
+      "f1": 0.7479482542773682,
+      "support": 37730
     },
     "Malicious": {
-      "precision": 0.9998711681695301,
-      "recall": 0.973102846494787,
-      "f1": 0.9863054177521751,
-      "support": 980996
+      "precision": 0.9998831246058666,
+      "recall": 0.9685528488056004,
+      "f1": 0.98396865520728,
+      "support": 803793
     }
   },
-  "fpr_benign": 0.002609,
-  "roc_auc": 0.9961433317958398,
+  "fpr_benign": 0.002412,
+  "roc_auc": 0.9950242697689515,
   "confusion_matrix": [
     [
-      47029,
-      123
+      37639,
+      91
     ],
     [
-      26386,
-      954610
+      25277,
+      778516
     ]
   ],
   "confusion_matrix_labels": [
     "Benign",
     "Malicious"
   ],
-  "classification_report": "              precision    recall  f1-score   support\n\n      Benign       0.64      1.00      0.78     47152\n   Malicious       1.00      0.97      0.99    980996\n\n    accuracy                           0.97   1028148\n   macro avg       0.82      0.99      0.88   1028148\nweighted avg       0.98      0.97      0.98   1028148\n"
+  "classification_report": "              precision    recall  f1-score   support\n\n      Benign       0.60      1.00      0.75     37730\n   Malicious       1.00      0.97      0.98    803793\n\n    accuracy                           0.97    841523\n   macro avg       0.80      0.98      0.87    841523\nweighted avg       0.98      0.97      0.97    841523\n"
 }
