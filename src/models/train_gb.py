@@ -1,11 +1,35 @@
 """
-train_gb.py  (v4 — GPU-aware + checkpoint/resume)
-==================================================
+train_gb.py  (v5 — GPU-aware + checkpoint/resume + BENIGN-weighted)
+===================================================================
 Train Gradient Boosting with optional GPU acceleration and pause/resume.
 
 GPU path A: LightGBM  device='gpu'                      — fastest, recommended
-GPU path B: XGBoost   device='cuda'                      — fallback
+GPU path B: XGBoost   device='cuda'                      — fallback when LGBM crashes
 CPU path:   sklearn HistGradientBoostingClassifier        — always works
+
+FALLBACK CHAIN
+--------------
+LightGBM GPU is tried first. It has a known bug on GPU with heavily
+weighted imbalanced data (empty-node split assertion failure). When it
+crashes, XGBoost GPU is tried next. Only if that also fails does the
+code fall back to CPU sklearn. Every step is logged explicitly.
+
+BENIGN WEIGHT BOOST
+-------------------
+In addition to class_weight='balanced', BENIGN samples receive an extra
+multiplier (benign_weight_multiplier in model_config.yaml, default 2.5).
+
+Why this matters per task:
+  binary  : BENIGN balanced weight ~21x, boost gives ~52x → modest FPR gain
+  8class  : BENIGN balanced weight  ~5x, boost gives ~13x → meaningful FPR gain
+  34class : BENIGN balanced weight ~1.3x, boost gives ~3x → significant FPR gain
+            (34-class BENIGN is dangerously close to mid-size attack classes
+            because it has 112K rows vs rare attacks at 1-2K rows)
+
+BENIGN class index by task:
+  binary  → 0  (BINARY_MAP["BENIGN"] = 0)
+  8class  → 0  (CATEGORY_MAP["BENIGN"] = 0)
+  34class → 1  (FINE_CLASS_NAMES sorted: BACKDOOR_MALWARE=0, BENIGN=1)
 
 PAUSE / RESUME
 --------------
@@ -13,18 +37,7 @@ LightGBM supports resuming from a checkpoint via init_model.
 Every `checkpoint_every` trees, a checkpoint file is saved to:
     models/checkpoints/gb_{task}_checkpoint.txt
 
-If training is interrupted (Ctrl+C, power loss, crash), the next run
-automatically detects the checkpoint and continues from that point.
-When training completes successfully, the checkpoint is deleted.
-
-To force a fresh start (ignore existing checkpoint):
-    Delete models/checkpoints/gb_{task}_checkpoint.txt
-    Or set checkpoint_resume: false in model_config.yaml
-
-sklearn CPU fallback has no checkpoint support — it trains from scratch.
-If interrupted, re-run the notebook and it will restart from zero.
-This is acceptable because CPU GBM on balanced ~680K rows takes
-roughly the same time as LightGBM GPU, so checkpointing is less critical.
+To force a fresh start: delete the checkpoint file or set resume: false.
 """
 
 import logging
@@ -44,6 +57,9 @@ from src.models.gpu_utils import (
 from src.models.model_utils import save_model
 
 log = logging.getLogger(__name__)
+
+# BENIGN class integer index for each task (derived from label_mapping.py)
+BENIGN_IDX = {"binary": 0, "8class": 0, "34class": 1}
 
 
 def train_gradient_boosting(
@@ -78,7 +94,6 @@ def train_gradient_boosting(
     ckpt_cfg      = config.get("checkpoint", {})
     n_classes     = len(np.unique(y_train))
 
-    # ── GPU setup ──────────────────────────────────────────────────────────────
     if gpu_cfg is None:
         gpu_section = config.get("gpu", {})
         gpu_cfg     = _build_gpu_cfg(gpu_section, gb_cfg)
@@ -100,7 +115,7 @@ def train_gradient_boosting(
     if gpu_cfg.backend != BACKEND_NONE:
         _check_data_fits_vram(X_train, gpu_cfg, task)
 
-    # ── Train ──────────────────────────────────────────────────────────────────
+    # ── Train — try GPU paths in order, fall to CPU on any failure ─────────────
     model = None
 
     if gpu_cfg.backend in (BACKEND_LGBM, BACKEND_CUML):
@@ -109,13 +124,14 @@ def train_gradient_boosting(
             artifacts_dir, ckpt_cfg,
         )
 
-    if model is None and gpu_cfg.backend == BACKEND_XGB:
+    # XGBoost fallback: triggered when LightGBM was the detected backend but
+    # failed (model is None), OR when XGBoost was detected as the primary backend.
+    if model is None and gpu_cfg.backend in (BACKEND_LGBM, BACKEND_CUML, BACKEND_XGB):
         model = _train_xgboost_gpu(X_train, y_train, gb_cfg, gpu_cfg, task, n_classes)
 
     if model is None:
         model = _train_cpu_gbm(X_train, y_train, gb_cfg, task)
 
-    # ── Save final model ───────────────────────────────────────────────────────
     if save:
         model_path = f"{artifacts_dir}/gb_{task}.pkl"
         if gpu_cfg.atomic_save:
@@ -127,24 +143,7 @@ def train_gradient_boosting(
     return model
 
 
-# ── Checkpoint helpers ─────────────────────────────────────────────────────────
-
-def _checkpoint_path(artifacts_dir: str, task: str) -> Path:
-    """Return the path for a LightGBM checkpoint file."""
-    ckpt_dir = Path(artifacts_dir) / "checkpoints"
-    ckpt_dir.mkdir(parents=True, exist_ok=True)
-    return ckpt_dir / f"gb_{task}_checkpoint.txt"
-
-
-def _delete_checkpoint(artifacts_dir: str, task: str) -> None:
-    """Delete checkpoint after successful training completion."""
-    ckpt = _checkpoint_path(artifacts_dir, task)
-    if ckpt.exists():
-        ckpt.unlink()
-        log.info(f"Checkpoint deleted (training complete): {ckpt}")
-
-
-# ── Training functions ─────────────────────────────────────────────────────────
+# ── Helpers ────────────────────────────────────────────────────────────────────
 
 def _build_gpu_cfg(gpu_section: dict, model_cfg: dict) -> GpuConfig:
     return GpuConfig(
@@ -177,42 +176,75 @@ def _check_data_fits_vram(X: np.ndarray, cfg: GpuConfig, task: str) -> None:
     if estimated_need_mb > available_mb:
         log.warning(
             f"[GPU] Data may exceed VRAM for task={task}. "
-            "Reduce balanced_ceiling in data_config.yaml if OOM occurs."
+            "Reduce sample_frac or set use_gpu: false if OOM occurs."
         )
 
 
-def _compute_sample_weights(y: np.ndarray) -> np.ndarray:
-    from sklearn.utils.class_weight import compute_sample_weight
-    return compute_sample_weight(class_weight="balanced", y=y).astype(np.float32)
+def _resolve_multiplier(multiplier_cfg, task: str) -> float:
+    """Resolve benign_weight_multiplier — supports scalar or per-task dict."""
+    if isinstance(multiplier_cfg, dict):
+        return float(multiplier_cfg.get(task, 1.0))
+    return float(multiplier_cfg) if multiplier_cfg is not None else 1.0
 
+
+def _compute_sample_weights(
+    y: np.ndarray,
+    task: str,
+    benign_multiplier: float = 1.0,
+) -> np.ndarray:
+    """
+    Compute per-sample weights: class_weight='balanced' base, plus an optional
+    extra multiplier on BENIGN samples.
+
+    Why the BENIGN boost matters:
+      - 34-class: BENIGN balanced weight is only ~1.3x (same as mid-size attack class).
+        The ultra-rare attacks (BACKDOOR_MALWARE ~128x, XSS ~90x) dominate the loss,
+        leaving BENIGN underweighted → high FPR. A 2-3x boost corrects this.
+      - 8-class: BENIGN at ~5x is better but a boost still reduces FPR meaningfully.
+      - binary: BENIGN already at ~21x; boost is conservative (minor FPR gain).
+    """
+    from sklearn.utils.class_weight import compute_sample_weight
+    weights = compute_sample_weight(class_weight="balanced", y=y).astype(np.float32)
+    if benign_multiplier != 1.0:
+        benign_idx = BENIGN_IDX.get(task, 0)
+        weights[y == benign_idx] *= benign_multiplier
+    return weights
+
+
+# ── Checkpoint helpers ─────────────────────────────────────────────────────────
+
+def _checkpoint_path(artifacts_dir: str, task: str) -> Path:
+    ckpt_dir = Path(artifacts_dir) / "checkpoints"
+    ckpt_dir.mkdir(parents=True, exist_ok=True)
+    return ckpt_dir / f"gb_{task}_checkpoint.txt"
+
+
+def _delete_checkpoint(artifacts_dir: str, task: str) -> None:
+    ckpt = _checkpoint_path(artifacts_dir, task)
+    if ckpt.exists():
+        ckpt.unlink()
+        log.info(f"Checkpoint deleted (training complete): {ckpt}")
+
+
+# ── Training functions ─────────────────────────────────────────────────────────
 
 def _train_lightgbm_gpu(
     X_train, y_train, gb_cfg, gpu_cfg: GpuConfig,
     task: str, n_classes: int,
     artifacts_dir: str, ckpt_cfg: dict,
 ):
-    """
-    GPU path: LightGBM with device='gpu' and checkpoint/resume support.
-
-    Checkpoint behaviour:
-      - Every `checkpoint_every` trees, saves a .txt checkpoint file
-      - On next run, if checkpoint exists, resumes from it automatically
-      - On successful completion, checkpoint is deleted
-      - To restart from scratch: delete models/checkpoints/gb_{task}_checkpoint.txt
-    """
+    """GPU path A: LightGBM with device='gpu' and checkpoint/resume support."""
     try:
         import lightgbm as lgb  # type: ignore
 
-        # ── Checkpoint config ─────────────────────────────────────────────────
         checkpoint_enabled = ckpt_cfg.get("enabled", True)
         checkpoint_every   = ckpt_cfg.get("checkpoint_every", 50)
         checkpoint_resume  = ckpt_cfg.get("resume", True)
         ckpt_file          = _checkpoint_path(artifacts_dir, task)
 
-        # ── Check for existing checkpoint ─────────────────────────────────────
-        init_model    = None
-        trees_done    = 0
-        resumed       = False
+        init_model = None
+        trees_done = 0
+        resumed    = False
 
         if checkpoint_resume and ckpt_file.exists():
             log.info(f"[CHECKPOINT] Found checkpoint: {ckpt_file}")
@@ -223,33 +255,20 @@ def _train_lightgbm_gpu(
                 if remaining <= 0:
                     log.info(
                         f"[CHECKPOINT] Checkpoint has {trees_done} trees — "
-                        f"already at max_iter={gb_cfg['max_iter']}. "
-                        f"Loading checkpoint as final model."
+                        f"already at max_iter. Loading as final model."
                     )
                     _delete_checkpoint(artifacts_dir, task)
                     return LightGBMWrapper(init_model, n_classes, task)
-                log.info(
-                    f"[CHECKPOINT] Resuming from tree {trees_done}. "
-                    f"Remaining: {remaining} trees."
-                )
+                log.info(f"[CHECKPOINT] Resuming from tree {trees_done}. Remaining: {remaining}.")
                 resumed = True
             except Exception as e:
-                log.warning(
-                    f"[CHECKPOINT] Could not load checkpoint ({e}). "
-                    f"Starting from scratch."
-                )
+                log.warning(f"[CHECKPOINT] Could not load checkpoint ({e}). Starting fresh.")
                 init_model = None
                 trees_done = 0
-        elif checkpoint_enabled:
-            log.info(
-                f"[CHECKPOINT] No checkpoint found. Starting fresh. "
-                f"Checkpoints saved every {checkpoint_every} trees to {ckpt_file}"
-            )
 
-        # ── Sample weights ────────────────────────────────────────────────────
-        sample_weights = _compute_sample_weights(y_train)
+        benign_multiplier = _resolve_multiplier(gb_cfg.get("benign_weight_multiplier", 1.0), task)
+        sample_weights    = _compute_sample_weights(y_train, task, benign_multiplier)
 
-        # ── LightGBM objective ────────────────────────────────────────────────
         if task == "binary":
             objective = "binary"
             num_class = 1
@@ -267,6 +286,9 @@ def _train_lightgbm_gpu(
             "max_depth":         gb_cfg["max_depth"],
             "min_child_samples": gb_cfg["min_samples_leaf"],
             "lambda_l2":         gb_cfg["l2_regularization"],
+            "lambda_l1":         gb_cfg.get("l1_regularization", 0.0),
+            "subsample":         gb_cfg.get("subsample", 0.8),
+            "colsample_bytree":  gb_cfg.get("colsample_bytree", 0.8),
             "random_state":      gb_cfg["random_state"],
             "device":            "gpu",
             "gpu_device_id":     gpu_cfg.gpu_id,
@@ -278,7 +300,6 @@ def _train_lightgbm_gpu(
         if objective == "multiclass":
             params["num_class"] = num_class
 
-        # ── Build datasets ────────────────────────────────────────────────────
         rng     = np.random.RandomState(gb_cfg["random_state"])
         val_n   = max(100, int(len(X_train) * gb_cfg["validation_fraction"]))
         val_idx = rng.choice(len(X_train), size=val_n, replace=False)
@@ -294,39 +315,27 @@ def _train_lightgbm_gpu(
             reference=ds_train,
         )
 
-        # ── Callbacks ─────────────────────────────────────────────────────────
         callbacks = [
-            lgb.early_stopping(
-                stopping_rounds=gb_cfg["n_iter_no_change"],
-                verbose=False,
-            ),
+            lgb.early_stopping(stopping_rounds=gb_cfg["n_iter_no_change"], verbose=False),
             lgb.log_evaluation(period=50),
         ]
 
-        # Checkpoint callback — saves every N trees during training
         if checkpoint_enabled:
             class CheckpointCallback:
-                """
-                LightGBM callback that saves a checkpoint every N trees.
-                Allows pause and resume if training is interrupted.
-                """
                 def __init__(self, every: int, path: Path):
                     self.every = every
                     self.path  = path
-                    self.order = 20    # run after other callbacks
+                    self.order = 20
 
                 def __call__(self, env):
                     if env.iteration % self.every == 0 and env.iteration > 0:
                         tmp = self.path.with_suffix(".tmp")
                         env.model.save_model(str(tmp))
                         tmp.rename(self.path)
-                        log.info(
-                            f"[CHECKPOINT] Saved at tree {env.iteration} -> {self.path}"
-                        )
+                        log.info(f"[CHECKPOINT] Saved at tree {env.iteration}")
 
             callbacks.append(CheckpointCallback(every=checkpoint_every, path=ckpt_file))
 
-        # ── Train ──────────────────────────────────────────────────────────────
         remaining_iters = gb_cfg["max_iter"] - trees_done
 
         with gpu_memory_context(gpu_cfg, f"LightGBM GPU {task}"):
@@ -337,9 +346,9 @@ def _train_lightgbm_gpu(
                 num_boost_round=remaining_iters,
                 valid_sets=[ds_val],
                 callbacks=callbacks,
-                init_model=init_model,    # None = fresh start, or loaded checkpoint
+                init_model=init_model,
             )
-            elapsed = time.time() - start
+            elapsed     = time.time() - start
             total_trees = booster.num_trees()
 
         log.info(
@@ -348,7 +357,6 @@ def _train_lightgbm_gpu(
             f"({'resumed from ' + str(trees_done) if resumed else 'fresh start'})"
         )
 
-        # Training completed successfully — delete checkpoint
         if checkpoint_enabled:
             _delete_checkpoint(artifacts_dir, task)
 
@@ -358,24 +366,19 @@ def _train_lightgbm_gpu(
         log.warning("LightGBM not installed — trying XGBoost GPU.")
         return None
     except KeyboardInterrupt:
-        # User pressed Ctrl+C — checkpoint is already saved by the callback
         log.warning(
-            f"\n[CHECKPOINT] Training interrupted by user (Ctrl+C).\n"
-            f"Checkpoint saved at: {ckpt_file}\n"
-            f"Re-run the notebook to resume from where you stopped."
+            f"\n[CHECKPOINT] Training interrupted. Checkpoint at: {ckpt_file}\n"
+            "Re-run to resume."
         )
         raise
     except Exception as e:
         err = str(e).lower()
         if "out of memory" in err or "oom" in err or "cuda" in err:
-            log.error(
-                f"LightGBM GPU OOM for task={task}: {e}\n"
-                "Reduce balanced_ceiling in data_config.yaml or set use_gpu: false."
-            )
+            log.error(f"LightGBM GPU OOM for task={task}: {e}")
         else:
             log.error(f"LightGBM GPU failed: {e}")
         if gpu_cfg.fallback_to_cpu:
-            log.warning("Falling back to CPU.")
+            log.warning("LightGBM GPU failed — trying XGBoost GPU next.")
             clear_gpu_memory(gpu_cfg.gpu_id)
             return None
         raise
@@ -384,11 +387,12 @@ def _train_lightgbm_gpu(
 def _train_xgboost_gpu(
     X_train, y_train, gb_cfg, gpu_cfg: GpuConfig, task: str, n_classes: int
 ):
-    """GPU path: XGBoost with device='cuda'."""
+    """GPU path B: XGBoost with device='cuda'. Proper held-out validation for early stopping."""
     try:
         import xgboost as xgb  # type: ignore
 
-        sample_weights = _compute_sample_weights(y_train)
+        benign_multiplier = _resolve_multiplier(gb_cfg.get("benign_weight_multiplier", 1.0), task)
+        sample_weights    = _compute_sample_weights(y_train, task, benign_multiplier)
 
         if task == "binary":
             objective = "binary:logistic"
@@ -398,33 +402,56 @@ def _train_xgboost_gpu(
             num_class = n_classes
 
         params = {
-            "objective":       objective,
-            "eval_metric":     "mlogloss" if task != "binary" else "logloss",
-            "learning_rate":   gb_cfg["learning_rate"],
-            "max_depth":       gb_cfg["max_depth"],
-            "min_child_weight":gb_cfg["min_samples_leaf"],
-            "reg_lambda":      gb_cfg["l2_regularization"],
-            "seed":            gb_cfg["random_state"],
-            "device":          f"cuda:{gpu_cfg.gpu_id}",
-            "tree_method":     "hist",
-            "verbosity":       0,
+            "objective":        objective,
+            "eval_metric":      "logloss" if task == "binary" else "mlogloss",
+            "learning_rate":    gb_cfg["learning_rate"],
+            "max_depth":        gb_cfg["max_depth"],
+            "min_child_weight": gb_cfg["min_samples_leaf"],
+            "reg_lambda":       gb_cfg["l2_regularization"],
+            "reg_alpha":        gb_cfg.get("l1_regularization", 0.0),
+            "subsample":        gb_cfg.get("subsample", 0.8),
+            "colsample_bytree": gb_cfg.get("colsample_bytree", 0.8),
+            "colsample_bylevel":0.9,
+            "seed":             gb_cfg["random_state"],
+            "device":           f"cuda:{gpu_cfg.gpu_id}",
+            "tree_method":      "hist",
+            "verbosity":        0,
         }
         if num_class:
             params["num_class"] = num_class
 
-        dm_train = xgb.DMatrix(X_train, label=y_train, weight=sample_weights)
+        # Hold out 10% of training data for proper early stopping validation.
+        # Without this, early stopping evaluates on training loss which always
+        # decreases → early stopping never fires → wastes compute on overfit trees.
+        val_size  = max(100, int(len(X_train) * gb_cfg["validation_fraction"]))
+        rng       = np.random.RandomState(gb_cfg["random_state"])
+        val_idx   = rng.choice(len(X_train), size=val_size, replace=False)
+        train_idx = np.setdiff1d(np.arange(len(X_train)), val_idx)
+
+        dm_train = xgb.DMatrix(
+            X_train[train_idx], label=y_train[train_idx],
+            weight=sample_weights[train_idx],
+        )
+        dm_val = xgb.DMatrix(
+            X_train[val_idx], label=y_train[val_idx],
+            weight=sample_weights[val_idx],
+        )
 
         with gpu_memory_context(gpu_cfg, f"XGBoost GPU {task}"):
             start   = time.time()
             booster = xgb.train(
-                params, dm_train,
+                params,
+                dm_train,
                 num_boost_round=gb_cfg["max_iter"],
-                evals=[(dm_train, "train")],
+                evals=[(dm_val, "val")],
                 verbose_eval=50,
                 early_stopping_rounds=gb_cfg["n_iter_no_change"],
             )
             elapsed = time.time() - start
-            log.info(f"XGBoost GPU done in {elapsed:.1f}s")
+            log.info(
+                f"XGBoost GPU done in {elapsed:.1f}s | "
+                f"best iteration: {booster.best_iteration + 1} / {gb_cfg['max_iter']} (GPU)"
+            )
 
         return XGBoostWrapper(booster, n_classes, task)
 
@@ -444,20 +471,19 @@ def _train_xgboost_gpu(
 
 
 def _train_cpu_gbm(X_train, y_train, gb_cfg, task: str):
-    """CPU fallback: sklearn HistGradientBoostingClassifier."""
+    """CPU fallback: sklearn HistGradientBoostingClassifier with BENIGN boost via sample_weight."""
     from sklearn.ensemble import HistGradientBoostingClassifier
     log.info(f"sklearn HistGBM CPU | task={task}")
-    log.info(
-        "NOTE: CPU path has no checkpoint/resume support. "
-        "If interrupted, training restarts from scratch."
-    )
+
+    benign_multiplier = gb_cfg.get("benign_weight_multiplier", 1.0)
+    sample_weights    = _compute_sample_weights(y_train, task, benign_multiplier)
+
     model = HistGradientBoostingClassifier(
         max_iter=gb_cfg["max_iter"],
         learning_rate=gb_cfg["learning_rate"],
         max_depth=gb_cfg["max_depth"],
         min_samples_leaf=gb_cfg["min_samples_leaf"],
         l2_regularization=gb_cfg["l2_regularization"],
-        class_weight=gb_cfg["class_weight"],
         early_stopping=gb_cfg["early_stopping"],
         validation_fraction=gb_cfg["validation_fraction"],
         n_iter_no_change=gb_cfg["n_iter_no_change"],
@@ -465,7 +491,7 @@ def _train_cpu_gbm(X_train, y_train, gb_cfg, task: str):
         verbose=1,
     )
     start = time.time()
-    model.fit(X_train, y_train)
+    model.fit(X_train, y_train, sample_weight=sample_weights)
     elapsed = time.time() - start
     log.info(
         f"sklearn HistGBM done in {elapsed:.1f}s (CPU) | "
@@ -477,10 +503,7 @@ def _train_cpu_gbm(X_train, y_train, gb_cfg, task: str):
 # ── Sklearn-compatible wrappers ────────────────────────────────────────────────
 
 class LightGBMWrapper:
-    """
-    Wraps a LightGBM Booster to expose .predict() / .predict_proba() API.
-    Predictions always returned as CPU numpy arrays.
-    """
+    """Wraps a LightGBM Booster to expose sklearn .predict() / .predict_proba() API."""
 
     def __init__(self, booster, n_classes: int, task: str):
         self.booster   = booster
@@ -508,10 +531,7 @@ class LightGBMWrapper:
 
 
 class XGBoostWrapper:
-    """
-    Wraps an XGBoost Booster to expose .predict() / .predict_proba() API.
-    Predictions always returned as CPU numpy arrays.
-    """
+    """Wraps an XGBoost Booster to expose sklearn .predict() / .predict_proba() API."""
 
     def __init__(self, booster, n_classes: int, task: str):
         self.booster   = booster

@@ -3,475 +3,287 @@
     {
       "batch_idx": 1,
       "batch_size": 500,
-      "n_malicious": 456,
-      "alert_rate": 0.912,
+      "n_malicious": 470,
+      "alert_rate": 0.94,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 53484.4025,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.03,
+          "current_mean": 37823.3649,
+          "baseline_mean": 63818.2,
+          "z_score": 0.055,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 19498.2365,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.017,
+          "current_mean": 19873.5596,
+          "baseline_mean": 19583.196,
+          "z_score": 0.012,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 17358.758,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.079,
+          "current_mean": 14472.862,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.05,
           "drifted": false
         },
         "Max": {
-          "current_mean": 383.632,
-          "baseline_mean": 381.9132,
-          "z_score": 0.002,
+          "current_mean": 316.542,
+          "baseline_mean": 378.7774,
+          "z_score": 0.081,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 215.1748,
-          "baseline_mean": 198.9157,
-          "z_score": 0.054,
+          "current_mean": 180.3637,
+          "baseline_mean": 198.3458,
+          "z_score": 0.059,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 44,
-        "1": 456
+        "0": 30,
+        "1": 470
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=1 | alert_rate=91.2% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=1 | alert_rate=94.0% (threshold=60%)"
       ]
     },
     {
       "batch_idx": 2,
       "batch_size": 500,
-      "n_malicious": 461,
-      "alert_rate": 0.922,
+      "n_malicious": 466,
+      "alert_rate": 0.932,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 69014.6644,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.015,
+          "current_mean": 85875.3689,
+          "baseline_mean": 63818.2,
+          "z_score": 0.047,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 19980.7423,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.002,
+          "current_mean": 19614.0352,
+          "baseline_mean": 19583.196,
+          "z_score": 0.001,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 16330.338,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.034,
+          "current_mean": 15621.558,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.001,
           "drifted": false
         },
         "Max": {
-          "current_mean": 369.592,
-          "baseline_mean": 381.9132,
-          "z_score": 0.017,
+          "current_mean": 390.228,
+          "baseline_mean": 378.7774,
+          "z_score": 0.015,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 196.819,
-          "baseline_mean": 198.9157,
-          "z_score": 0.007,
+          "current_mean": 195.0601,
+          "baseline_mean": 198.3458,
+          "z_score": 0.011,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 39,
-        "1": 461
+        "0": 34,
+        "1": 466
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=2 | alert_rate=92.2% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=2 | alert_rate=93.2% (threshold=60%)"
       ]
     },
     {
       "batch_idx": 3,
       "batch_size": 500,
-      "n_malicious": 463,
-      "alert_rate": 0.926,
+      "n_malicious": 465,
+      "alert_rate": 0.93,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 56858.2761,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.021,
+          "current_mean": 36830.6227,
+          "baseline_mean": 63818.2,
+          "z_score": 0.057,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 19503.2453,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.017,
+          "current_mean": 18955.2956,
+          "baseline_mean": 19583.196,
+          "z_score": 0.026,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 14381.742,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.051,
+          "current_mean": 15729.262,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.005,
           "drifted": false
         },
         "Max": {
-          "current_mean": 356.53,
-          "baseline_mean": 381.9132,
-          "z_score": 0.034,
+          "current_mean": 323.434,
+          "baseline_mean": 378.7774,
+          "z_score": 0.072,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 183.2342,
-          "baseline_mean": 198.9157,
-          "z_score": 0.052,
+          "current_mean": 191.7029,
+          "baseline_mean": 198.3458,
+          "z_score": 0.022,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 37,
-        "1": 463
+        "0": 35,
+        "1": 465
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=3 | alert_rate=92.6% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=3 | alert_rate=93.0% (threshold=60%)"
       ]
     },
     {
       "batch_idx": 4,
       "batch_size": 500,
-      "n_malicious": 459,
-      "alert_rate": 0.918,
+      "n_malicious": 451,
+      "alert_rate": 0.902,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 79315.3412,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.045,
+          "current_mean": 54658.7232,
+          "baseline_mean": 63818.2,
+          "z_score": 0.02,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 21115.4029,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.045,
+          "current_mean": 19125.3744,
+          "baseline_mean": 19583.196,
+          "z_score": 0.019,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 13975.63,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.069,
+          "current_mean": 13878.846,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.077,
           "drifted": false
         },
         "Max": {
-          "current_mean": 408.52,
-          "baseline_mean": 381.9132,
-          "z_score": 0.036,
+          "current_mean": 382.818,
+          "baseline_mean": 378.7774,
+          "z_score": 0.005,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 190.1635,
-          "baseline_mean": 198.9157,
-          "z_score": 0.029,
+          "current_mean": 183.8034,
+          "baseline_mean": 198.3458,
+          "z_score": 0.048,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 41,
-        "1": 459
+        "0": 49,
+        "1": 451
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=4 | alert_rate=91.8% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=4 | alert_rate=90.2% (threshold=60%)"
       ]
     },
     {
       "batch_idx": 5,
       "batch_size": 500,
-      "n_malicious": 466,
-      "alert_rate": 0.932,
+      "n_malicious": 460,
+      "alert_rate": 0.92,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 44417.5182,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.057,
+          "current_mean": 79472.1626,
+          "baseline_mean": 63818.2,
+          "z_score": 0.033,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 20705.1096,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.029,
+          "current_mean": 20429.221,
+          "baseline_mean": 19583.196,
+          "z_score": 0.035,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 15358.706,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.009,
+          "current_mean": 15677.396,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.003,
           "drifted": false
         },
         "Max": {
-          "current_mean": 350.788,
-          "baseline_mean": 381.9132,
-          "z_score": 0.042,
+          "current_mean": 394.036,
+          "baseline_mean": 378.7774,
+          "z_score": 0.02,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 189.076,
-          "baseline_mean": 198.9157,
-          "z_score": 0.032,
+          "current_mean": 214.0757,
+          "baseline_mean": 198.3458,
+          "z_score": 0.052,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 34,
-        "1": 466
+        "0": 40,
+        "1": 460
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=5 | alert_rate=93.2% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=5 | alert_rate=92.0% (threshold=60%)"
       ]
     },
     {
       "batch_idx": 6,
       "batch_size": 500,
-      "n_malicious": 459,
-      "alert_rate": 0.918,
+      "n_malicious": 469,
+      "alert_rate": 0.938,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 71267.9304,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.022,
+          "current_mean": 48824.4122,
+          "baseline_mean": 63818.2,
+          "z_score": 0.032,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 19349.4549,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.023,
+          "current_mean": 20284.6148,
+          "baseline_mean": 19583.196,
+          "z_score": 0.029,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 16402.766,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.037,
+          "current_mean": 16259.168,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.029,
           "drifted": false
         },
         "Max": {
-          "current_mean": 398.066,
-          "baseline_mean": 381.9132,
-          "z_score": 0.022,
+          "current_mean": 378.59,
+          "baseline_mean": 378.7774,
+          "z_score": 0.0,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 210.9024,
-          "baseline_mean": 198.9157,
-          "z_score": 0.04,
+          "current_mean": 203.4585,
+          "baseline_mean": 198.3458,
+          "z_score": 0.017,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 41,
-        "1": 459
+        "0": 31,
+        "1": 469
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=6 | alert_rate=91.8% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=6 | alert_rate=93.8% (threshold=60%)"
       ]
     },
     {
       "batch_idx": 7,
-      "batch_size": 500,
-      "n_malicious": 459,
-      "alert_rate": 0.918,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 67707.0879,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.011,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20011.1034,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.003,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16752.014,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.052,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 432.454,
-          "baseline_mean": 381.9132,
-          "z_score": 0.068,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 216.5937,
-          "baseline_mean": 198.9157,
-          "z_score": 0.058,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 41,
-        "1": 459
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=7 | alert_rate=91.8% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 8,
-      "batch_size": 500,
-      "n_malicious": 466,
-      "alert_rate": 0.932,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 61187.5672,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.008,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 21888.7167,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.075,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 12930.208,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.115,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 363.47,
-          "baseline_mean": 381.9132,
-          "z_score": 0.025,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 166.5503,
-          "baseline_mean": 198.9157,
-          "z_score": 0.107,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 34,
-        "1": 466
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=8 | alert_rate=93.2% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 9,
-      "batch_size": 500,
-      "n_malicious": 452,
-      "alert_rate": 0.904,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 77266.6617,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.039,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 18124.658,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.07,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15915.758,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.016,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 406.53,
-          "baseline_mean": 381.9132,
-          "z_score": 0.033,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 214.9518,
-          "baseline_mean": 198.9157,
-          "z_score": 0.053,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 48,
-        "1": 452
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=9 | alert_rate=90.4% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 10,
-      "batch_size": 500,
-      "n_malicious": 463,
-      "alert_rate": 0.926,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 58123.5197,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.017,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19236.4441,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.027,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16132.796,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.025,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 349.55,
-          "baseline_mean": 381.9132,
-          "z_score": 0.044,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 205.691,
-          "baseline_mean": 198.9157,
-          "z_score": 0.022,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 37,
-        "1": 463
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=10 | alert_rate=92.6% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 11,
       "batch_size": 500,
       "n_malicious": 462,
       "alert_rate": 0.924,
@@ -479,33 +291,33 @@
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 76655.64,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.037,
+          "current_mean": 76222.4261,
+          "baseline_mean": 63818.2,
+          "z_score": 0.026,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 20985.2666,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.04,
+          "current_mean": 19226.7016,
+          "baseline_mean": 19583.196,
+          "z_score": 0.015,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 16607.372,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.046,
+          "current_mean": 16028.446,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.019,
           "drifted": false
         },
         "Max": {
-          "current_mean": 458.416,
-          "baseline_mean": 381.9132,
-          "z_score": 0.104,
+          "current_mean": 364.438,
+          "baseline_mean": 378.7774,
+          "z_score": 0.019,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 206.5392,
-          "baseline_mean": 198.9157,
-          "z_score": 0.025,
+          "current_mean": 195.0887,
+          "baseline_mean": 198.3458,
+          "z_score": 0.011,
           "drifted": false
         }
       },
@@ -514,54 +326,242 @@
         "1": 462
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=11 | alert_rate=92.4% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=7 | alert_rate=92.4% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 8,
+      "batch_size": 500,
+      "n_malicious": 470,
+      "alert_rate": 0.94,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 93848.0035,
+          "baseline_mean": 63818.2,
+          "z_score": 0.064,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 18413.1138,
+          "baseline_mean": 19583.196,
+          "z_score": 0.048,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 17040.096,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.064,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 421.392,
+          "baseline_mean": 378.7774,
+          "z_score": 0.055,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 212.9049,
+          "baseline_mean": 198.3458,
+          "z_score": 0.048,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 30,
+        "1": 470
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=8 | alert_rate=94.0% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 9,
+      "batch_size": 500,
+      "n_malicious": 457,
+      "alert_rate": 0.914,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 63259.4067,
+          "baseline_mean": 63818.2,
+          "z_score": 0.001,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 20464.2693,
+          "baseline_mean": 19583.196,
+          "z_score": 0.036,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 14723.268,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.039,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 403.076,
+          "baseline_mean": 378.7774,
+          "z_score": 0.032,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 196.8999,
+          "baseline_mean": 198.3458,
+          "z_score": 0.005,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 43,
+        "1": 457
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=9 | alert_rate=91.4% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 10,
+      "batch_size": 500,
+      "n_malicious": 446,
+      "alert_rate": 0.892,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 61367.5098,
+          "baseline_mean": 63818.2,
+          "z_score": 0.005,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 19445.7748,
+          "baseline_mean": 19583.196,
+          "z_score": 0.006,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16655.706,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.046,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 413.22,
+          "baseline_mean": 378.7774,
+          "z_score": 0.045,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 210.1003,
+          "baseline_mean": 198.3458,
+          "z_score": 0.039,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 54,
+        "1": 446
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=10 | alert_rate=89.2% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 11,
+      "batch_size": 500,
+      "n_malicious": 467,
+      "alert_rate": 0.934,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 64027.069,
+          "baseline_mean": 63818.2,
+          "z_score": 0.0,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 21013.6373,
+          "baseline_mean": 19583.196,
+          "z_score": 0.058,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 15287.72,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.014,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 381.356,
+          "baseline_mean": 378.7774,
+          "z_score": 0.003,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 206.8958,
+          "baseline_mean": 198.3458,
+          "z_score": 0.028,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 33,
+        "1": 467
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=11 | alert_rate=93.4% (threshold=60%)"
       ]
     },
     {
       "batch_idx": 12,
       "batch_size": 500,
-      "n_malicious": 455,
-      "alert_rate": 0.91,
+      "n_malicious": 458,
+      "alert_rate": 0.916,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 42260.0198,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.063,
+          "current_mean": 70384.821,
+          "baseline_mean": 63818.2,
+          "z_score": 0.014,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 20623.3799,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.026,
+          "current_mean": 19176.0268,
+          "baseline_mean": 19583.196,
+          "z_score": 0.017,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 15311.594,
-          "baseline_mean": 15553.8716,
+          "current_mean": 15852.998,
+          "baseline_mean": 15608.6608,
           "z_score": 0.011,
           "drifted": false
         },
         "Max": {
-          "current_mean": 328.21,
-          "baseline_mean": 381.9132,
-          "z_score": 0.073,
+          "current_mean": 429.77,
+          "baseline_mean": 378.7774,
+          "z_score": 0.066,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 196.2352,
-          "baseline_mean": 198.9157,
-          "z_score": 0.009,
+          "current_mean": 219.7221,
+          "baseline_mean": 198.3458,
+          "z_score": 0.071,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 45,
-        "1": 455
+        "0": 42,
+        "1": 458
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=12 | alert_rate=91.0% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=12 | alert_rate=91.6% (threshold=60%)"
       ]
     },
     {
@@ -573,33 +573,33 @@
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 69260.977,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.016,
+          "current_mean": 60559.412,
+          "baseline_mean": 63818.2,
+          "z_score": 0.007,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 20462.3429,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.02,
+          "current_mean": 20273.789,
+          "baseline_mean": 19583.196,
+          "z_score": 0.028,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 14490.742,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.046,
+          "current_mean": 17198.82,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.071,
           "drifted": false
         },
         "Max": {
-          "current_mean": 414.81,
-          "baseline_mean": 381.9132,
-          "z_score": 0.045,
+          "current_mean": 386.838,
+          "baseline_mean": 378.7774,
+          "z_score": 0.01,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 199.9534,
-          "baseline_mean": 198.9157,
-          "z_score": 0.003,
+          "current_mean": 207.5155,
+          "baseline_mean": 198.3458,
+          "z_score": 0.03,
           "drifted": false
         }
       },
@@ -614,96 +614,95 @@
     {
       "batch_idx": 14,
       "batch_size": 500,
-      "n_malicious": 464,
-      "alert_rate": 0.928,
+      "n_malicious": 455,
+      "alert_rate": 0.91,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 71673.3783,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.023,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20636.448,
-          "baseline_mean": 19941.3114,
+          "current_mean": 76338.625,
+          "baseline_mean": 63818.2,
           "z_score": 0.027,
           "drifted": false
         },
+        "Rate": {
+          "current_mean": 19127.8001,
+          "baseline_mean": 19583.196,
+          "z_score": 0.019,
+          "drifted": false
+        },
         "Tot sum": {
-          "current_mean": 14496.146,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.046,
+          "current_mean": 14531.098,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.048,
           "drifted": false
         },
         "Max": {
-          "current_mean": 393.85,
-          "baseline_mean": 381.9132,
-          "z_score": 0.016,
+          "current_mean": 422.476,
+          "baseline_mean": 378.7774,
+          "z_score": 0.057,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 188.2018,
-          "baseline_mean": 198.9157,
-          "z_score": 0.035,
+          "current_mean": 205.8598,
+          "baseline_mean": 198.3458,
+          "z_score": 0.025,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 36,
-        "1": 464
+        "0": 45,
+        "1": 455
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=14 | alert_rate=92.8% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=14 | alert_rate=91.0% (threshold=60%)"
       ]
     },
     {
       "batch_idx": 15,
       "batch_size": 500,
-      "n_malicious": 474,
-      "alert_rate": 0.948,
+      "n_malicious": 448,
+      "alert_rate": 0.896,
       "alert_level": "CRITICAL",
-      "n_drift_warnings": 1,
+      "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 39326.4798,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.072,
+          "current_mean": 63772.1245,
+          "baseline_mean": 63818.2,
+          "z_score": 0.0,
           "drifted": false
         },
         "Rate": {
-          "current_mean": Infinity,
-          "baseline_mean": 19941.3114,
-          "z_score": Infinity,
-          "drifted": true
+          "current_mean": 19845.3508,
+          "baseline_mean": 19583.196,
+          "z_score": 0.011,
+          "drifted": false
         },
         "Tot sum": {
-          "current_mean": 16023.144,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.021,
+          "current_mean": 13886.878,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.076,
           "drifted": false
         },
         "Max": {
-          "current_mean": 343.592,
-          "baseline_mean": 381.9132,
-          "z_score": 0.052,
+          "current_mean": 382.048,
+          "baseline_mean": 378.7774,
+          "z_score": 0.004,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 199.9144,
-          "baseline_mean": 198.9157,
-          "z_score": 0.003,
+          "current_mean": 198.504,
+          "baseline_mean": 198.3458,
+          "z_score": 0.001,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 26,
-        "1": 474
+        "0": 52,
+        "1": 448
       },
       "warnings": [
-        "FEATURE DRIFT | Rate | current_mean=inf | baseline_mean=19941.311 | z=inf",
-        "CRITICAL ALERT SPIKE | batch=15 | alert_rate=94.8% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=15 | alert_rate=89.6% (threshold=60%)"
       ]
     },
     {
@@ -715,33 +714,33 @@
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 49533.2287,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.042,
+          "current_mean": 56203.3712,
+          "baseline_mean": 63818.2,
+          "z_score": 0.016,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 20962.9224,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.039,
+          "current_mean": 21112.8766,
+          "baseline_mean": 19583.196,
+          "z_score": 0.062,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 15855.212,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.013,
+          "current_mean": 14978.55,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.028,
           "drifted": false
         },
         "Max": {
-          "current_mean": 351.492,
-          "baseline_mean": 381.9132,
-          "z_score": 0.041,
+          "current_mean": 367.158,
+          "baseline_mean": 378.7774,
+          "z_score": 0.015,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 202.3471,
-          "baseline_mean": 198.9157,
-          "z_score": 0.011,
+          "current_mean": 188.781,
+          "baseline_mean": 198.3458,
+          "z_score": 0.032,
           "drifted": false
         }
       },
@@ -756,1415 +755,52 @@
     {
       "batch_idx": 17,
       "batch_size": 500,
-      "n_malicious": 473,
-      "alert_rate": 0.946,
+      "n_malicious": 469,
+      "alert_rate": 0.938,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 55343.8379,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.025,
+          "current_mean": 53074.1923,
+          "baseline_mean": 63818.2,
+          "z_score": 0.023,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 20306.0537,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.014,
+          "current_mean": 24250.5577,
+          "baseline_mean": 19583.196,
+          "z_score": 0.191,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 14723.998,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.036,
+          "current_mean": 16318.574,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.032,
           "drifted": false
         },
         "Max": {
-          "current_mean": 357.116,
-          "baseline_mean": 381.9132,
-          "z_score": 0.034,
+          "current_mean": 363.288,
+          "baseline_mean": 378.7774,
+          "z_score": 0.02,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 181.8626,
-          "baseline_mean": 198.9157,
-          "z_score": 0.056,
+          "current_mean": 198.3589,
+          "baseline_mean": 198.3458,
+          "z_score": 0.0,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 27,
-        "1": 473
+        "0": 31,
+        "1": 469
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=17 | alert_rate=94.6% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=17 | alert_rate=93.8% (threshold=60%)"
       ]
     },
     {
       "batch_idx": 18,
-      "batch_size": 500,
-      "n_malicious": 457,
-      "alert_rate": 0.914,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 67303.4775,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.01,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20117.9527,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.007,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15679.158,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.005,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 390.756,
-          "baseline_mean": 381.9132,
-          "z_score": 0.012,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 202.0195,
-          "baseline_mean": 198.9157,
-          "z_score": 0.01,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 43,
-        "1": 457
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=18 | alert_rate=91.4% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 19,
-      "batch_size": 500,
-      "n_malicious": 460,
-      "alert_rate": 0.92,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 97807.3577,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.099,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19104.5049,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.032,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15470.258,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.004,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 428.982,
-          "baseline_mean": 381.9132,
-          "z_score": 0.064,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 214.5813,
-          "baseline_mean": 198.9157,
-          "z_score": 0.052,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 40,
-        "1": 460
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=19 | alert_rate=92.0% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 20,
-      "batch_size": 500,
-      "n_malicious": 458,
-      "alert_rate": 0.916,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 61876.5117,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.006,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19594.5669,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.013,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16215.498,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.029,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 409.86,
-          "baseline_mean": 381.9132,
-          "z_score": 0.038,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 211.9948,
-          "baseline_mean": 198.9157,
-          "z_score": 0.043,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 42,
-        "1": 458
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=20 | alert_rate=91.6% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 21,
-      "batch_size": 500,
-      "n_malicious": 480,
-      "alert_rate": 0.96,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 33004.9289,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.09,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 21197.61,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.048,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16098.79,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.024,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 339.332,
-          "baseline_mean": 381.9132,
-          "z_score": 0.058,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 182.3054,
-          "baseline_mean": 198.9157,
-          "z_score": 0.055,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 20,
-        "1": 480
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=21 | alert_rate=96.0% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 22,
-      "batch_size": 500,
-      "n_malicious": 480,
-      "alert_rate": 0.96,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 33465.9716,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.089,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 18878.8252,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.041,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 17023.824,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.064,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 333.17,
-          "baseline_mean": 381.9132,
-          "z_score": 0.066,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 186.5208,
-          "baseline_mean": 198.9157,
-          "z_score": 0.041,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 20,
-        "1": 480
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=22 | alert_rate=96.0% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 23,
-      "batch_size": 500,
-      "n_malicious": 471,
-      "alert_rate": 0.942,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 70966.1234,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.021,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19764.5838,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.007,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 14970.782,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.025,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 346.012,
-          "baseline_mean": 381.9132,
-          "z_score": 0.049,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 177.2953,
-          "baseline_mean": 198.9157,
-          "z_score": 0.071,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 29,
-        "1": 471
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=23 | alert_rate=94.2% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 24,
-      "batch_size": 500,
-      "n_malicious": 471,
-      "alert_rate": 0.942,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 44044.3181,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.058,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19883.4802,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.002,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16099.47,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.024,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 335.946,
-          "baseline_mean": 381.9132,
-          "z_score": 0.062,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 176.8457,
-          "baseline_mean": 198.9157,
-          "z_score": 0.073,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 29,
-        "1": 471
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=24 | alert_rate=94.2% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 25,
-      "batch_size": 500,
-      "n_malicious": 477,
-      "alert_rate": 0.954,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 35885.8412,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.082,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 22321.654,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.092,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15010.962,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.024,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 321.772,
-          "baseline_mean": 381.9132,
-          "z_score": 0.081,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 171.7156,
-          "baseline_mean": 198.9157,
-          "z_score": 0.09,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 23,
-        "1": 477
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=25 | alert_rate=95.4% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 26,
-      "batch_size": 500,
-      "n_malicious": 473,
-      "alert_rate": 0.946,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 39434.1869,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.071,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20229.8256,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.011,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16016.38,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.02,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 340.956,
-          "baseline_mean": 381.9132,
-          "z_score": 0.055,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 192.8341,
-          "baseline_mean": 198.9157,
-          "z_score": 0.02,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 27,
-        "1": 473
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=26 | alert_rate=94.6% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 27,
-      "batch_size": 500,
-      "n_malicious": 472,
-      "alert_rate": 0.944,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 40900.2077,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.067,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20489.3915,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.021,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15255.506,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.013,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 306.116,
-          "baseline_mean": 381.9132,
-          "z_score": 0.103,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 178.877,
-          "baseline_mean": 198.9157,
-          "z_score": 0.066,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 28,
-        "1": 472
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=27 | alert_rate=94.4% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 28,
-      "batch_size": 500,
-      "n_malicious": 478,
-      "alert_rate": 0.956,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 39374.6483,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.072,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20182.7119,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.009,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16409.832,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.037,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 338.18,
-          "baseline_mean": 381.9132,
-          "z_score": 0.059,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 189.5219,
-          "baseline_mean": 198.9157,
-          "z_score": 0.031,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 22,
-        "1": 478
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=28 | alert_rate=95.6% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 29,
-      "batch_size": 500,
-      "n_malicious": 478,
-      "alert_rate": 0.956,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 28009.204,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.105,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 22334.1871,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.092,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 14866.52,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.03,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 280.06,
-          "baseline_mean": 381.9132,
-          "z_score": 0.138,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 165.6799,
-          "baseline_mean": 198.9157,
-          "z_score": 0.11,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 22,
-        "1": 478
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=29 | alert_rate=95.6% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 30,
-      "batch_size": 500,
-      "n_malicious": 483,
-      "alert_rate": 0.966,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 23542.7269,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.118,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 22050.0785,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.081,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15566.83,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.001,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 285.194,
-          "baseline_mean": 381.9132,
-          "z_score": 0.131,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 166.2465,
-          "baseline_mean": 198.9157,
-          "z_score": 0.108,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 17,
-        "1": 483
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=30 | alert_rate=96.6% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 31,
-      "batch_size": 500,
-      "n_malicious": 459,
-      "alert_rate": 0.918,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 42304.0226,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.063,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 21648.0547,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.066,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 14297.964,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.055,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 299.128,
-          "baseline_mean": 381.9132,
-          "z_score": 0.112,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 184.6691,
-          "baseline_mean": 198.9157,
-          "z_score": 0.047,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 41,
-        "1": 459
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=31 | alert_rate=91.8% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 32,
-      "batch_size": 500,
-      "n_malicious": 472,
-      "alert_rate": 0.944,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 44754.4859,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.056,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20080.8531,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.005,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15434.826,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.005,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 346.85,
-          "baseline_mean": 381.9132,
-          "z_score": 0.047,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 200.4911,
-          "baseline_mean": 198.9157,
-          "z_score": 0.005,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 28,
-        "1": 472
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=32 | alert_rate=94.4% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 33,
-      "batch_size": 500,
-      "n_malicious": 473,
-      "alert_rate": 0.946,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 72000.5379,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.024,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19102.892,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.032,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16714.002,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.051,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 381.082,
-          "baseline_mean": 381.9132,
-          "z_score": 0.001,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 202.5102,
-          "baseline_mean": 198.9157,
-          "z_score": 0.012,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 27,
-        "1": 473
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=33 | alert_rate=94.6% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 34,
-      "batch_size": 500,
-      "n_malicious": 460,
-      "alert_rate": 0.92,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 64300.7287,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.001,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20130.0428,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.007,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15098.674,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.02,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 396.35,
-          "baseline_mean": 381.9132,
-          "z_score": 0.02,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 198.6297,
-          "baseline_mean": 198.9157,
-          "z_score": 0.001,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 40,
-        "1": 460
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=34 | alert_rate=92.0% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 35,
-      "batch_size": 500,
-      "n_malicious": 465,
-      "alert_rate": 0.93,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 48108.8333,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.046,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19072.6582,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.033,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15044.174,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.022,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 373.256,
-          "baseline_mean": 381.9132,
-          "z_score": 0.012,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 185.7293,
-          "baseline_mean": 198.9157,
-          "z_score": 0.043,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 35,
-        "1": 465
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=35 | alert_rate=93.0% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 36,
-      "batch_size": 500,
-      "n_malicious": 467,
-      "alert_rate": 0.934,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 37117.9401,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.078,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20822.1922,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.034,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 14720.584,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.036,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 342.326,
-          "baseline_mean": 381.9132,
-          "z_score": 0.054,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 176.5396,
-          "baseline_mean": 198.9157,
-          "z_score": 0.074,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 33,
-        "1": 467
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=36 | alert_rate=93.4% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 37,
-      "batch_size": 500,
-      "n_malicious": 463,
-      "alert_rate": 0.926,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 47562.7332,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.048,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20802.965,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.033,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16005.722,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.02,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 363.72,
-          "baseline_mean": 381.9132,
-          "z_score": 0.025,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 201.4433,
-          "baseline_mean": 198.9157,
-          "z_score": 0.008,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 37,
-        "1": 463
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=37 | alert_rate=92.6% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 38,
-      "batch_size": 500,
-      "n_malicious": 466,
-      "alert_rate": 0.932,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 57116.721,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.02,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 21756.4879,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.07,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15043.518,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.022,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 350.674,
-          "baseline_mean": 381.9132,
-          "z_score": 0.042,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 198.6547,
-          "baseline_mean": 198.9157,
-          "z_score": 0.001,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 34,
-        "1": 466
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=38 | alert_rate=93.2% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 39,
-      "batch_size": 500,
-      "n_malicious": 459,
-      "alert_rate": 0.918,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 87322.5049,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.069,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20903.3984,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.037,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 13682.972,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.082,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 369.248,
-          "baseline_mean": 381.9132,
-          "z_score": 0.017,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 181.6065,
-          "baseline_mean": 198.9157,
-          "z_score": 0.057,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 41,
-        "1": 459
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=39 | alert_rate=91.8% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 40,
-      "batch_size": 500,
-      "n_malicious": 461,
-      "alert_rate": 0.922,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 153020.7428,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.261,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 22300.6631,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.091,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15365.732,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.008,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 430.196,
-          "baseline_mean": 381.9132,
-          "z_score": 0.065,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 207.0041,
-          "baseline_mean": 198.9157,
-          "z_score": 0.027,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 39,
-        "1": 461
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=40 | alert_rate=92.2% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 41,
-      "batch_size": 500,
-      "n_malicious": 476,
-      "alert_rate": 0.952,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 61655.9439,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.006,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19785.9628,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.006,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 14966.482,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.026,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 365.868,
-          "baseline_mean": 381.9132,
-          "z_score": 0.022,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 188.5353,
-          "baseline_mean": 198.9157,
-          "z_score": 0.034,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 24,
-        "1": 476
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=41 | alert_rate=95.2% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 42,
-      "batch_size": 500,
-      "n_malicious": 466,
-      "alert_rate": 0.932,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 56827.8062,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.021,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19874.926,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.003,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 14936.922,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.027,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 367.38,
-          "baseline_mean": 381.9132,
-          "z_score": 0.02,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 194.5883,
-          "baseline_mean": 198.9157,
-          "z_score": 0.014,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 34,
-        "1": 466
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=42 | alert_rate=93.2% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 43,
-      "batch_size": 500,
-      "n_malicious": 463,
-      "alert_rate": 0.926,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 47836.1033,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.047,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19004.1478,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.036,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15846.556,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.013,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 356.902,
-          "baseline_mean": 381.9132,
-          "z_score": 0.034,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 196.8177,
-          "baseline_mean": 198.9157,
-          "z_score": 0.007,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 37,
-        "1": 463
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=43 | alert_rate=92.6% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 44,
-      "batch_size": 500,
-      "n_malicious": 467,
-      "alert_rate": 0.934,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 50635.2506,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.039,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 19300.8506,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.025,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 16302.136,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.033,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 375.892,
-          "baseline_mean": 381.9132,
-          "z_score": 0.008,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 192.6706,
-          "baseline_mean": 198.9157,
-          "z_score": 0.021,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 33,
-        "1": 467
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=44 | alert_rate=93.4% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 45,
-      "batch_size": 500,
-      "n_malicious": 464,
-      "alert_rate": 0.928,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 69130.5747,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.015,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20739.324,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.031,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 15612.936,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.003,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 351.168,
-          "baseline_mean": 381.9132,
-          "z_score": 0.042,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 203.4802,
-          "baseline_mean": 198.9157,
-          "z_score": 0.015,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 36,
-        "1": 464
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=45 | alert_rate=92.8% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 46,
-      "batch_size": 500,
-      "n_malicious": 456,
-      "alert_rate": 0.912,
-      "alert_level": "CRITICAL",
-      "n_drift_warnings": 0,
-      "drift_details": {
-        "Variance": {
-          "current_mean": 67325.7286,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.01,
-          "drifted": false
-        },
-        "Rate": {
-          "current_mean": 20627.3094,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.026,
-          "drifted": false
-        },
-        "Tot sum": {
-          "current_mean": 17501.574,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.085,
-          "drifted": false
-        },
-        "Max": {
-          "current_mean": 392.422,
-          "baseline_mean": 381.9132,
-          "z_score": 0.014,
-          "drifted": false
-        },
-        "AVG": {
-          "current_mean": 220.6949,
-          "baseline_mean": 198.9157,
-          "z_score": 0.072,
-          "drifted": false
-        }
-      },
-      "pred_distribution": {
-        "0": 44,
-        "1": 456
-      },
-      "warnings": [
-        "CRITICAL ALERT SPIKE | batch=46 | alert_rate=91.2% (threshold=60%)"
-      ]
-    },
-    {
-      "batch_idx": 47,
       "batch_size": 500,
       "n_malicious": 470,
       "alert_rate": 0.94,
@@ -2172,33 +808,33 @@
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 61664.8973,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.006,
+          "current_mean": 86927.1109,
+          "baseline_mean": 63818.2,
+          "z_score": 0.049,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 21182.8719,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.048,
+          "current_mean": 19450.4231,
+          "baseline_mean": 19583.196,
+          "z_score": 0.005,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 15213.626,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.015,
+          "current_mean": 16039.224,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.019,
           "drifted": false
         },
         "Max": {
-          "current_mean": 351.16,
-          "baseline_mean": 381.9132,
-          "z_score": 0.042,
+          "current_mean": 414.834,
+          "baseline_mean": 378.7774,
+          "z_score": 0.047,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 189.9636,
-          "baseline_mean": 198.9157,
-          "z_score": 0.03,
+          "current_mean": 205.6666,
+          "baseline_mean": 198.3458,
+          "z_score": 0.024,
           "drifted": false
         }
       },
@@ -2207,58 +843,716 @@
         "1": 470
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=47 | alert_rate=94.0% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=18 | alert_rate=94.0% (threshold=60%)"
       ]
     },
     {
-      "batch_idx": 48,
+      "batch_idx": 19,
       "batch_size": 500,
-      "n_malicious": 463,
-      "alert_rate": 0.926,
+      "n_malicious": 464,
+      "alert_rate": 0.928,
       "alert_level": "CRITICAL",
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 131734.8781,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.199,
+          "current_mean": 82874.827,
+          "baseline_mean": 63818.2,
+          "z_score": 0.041,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 21651.9003,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.066,
+          "current_mean": 19477.051,
+          "baseline_mean": 19583.196,
+          "z_score": 0.004,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 15158.954,
-          "baseline_mean": 15553.8716,
+          "current_mean": 15040.616,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.025,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 369.382,
+          "baseline_mean": 378.7774,
+          "z_score": 0.012,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 194.0351,
+          "baseline_mean": 198.3458,
+          "z_score": 0.014,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 36,
+        "1": 464
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=19 | alert_rate=92.8% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 20,
+      "batch_size": 500,
+      "n_malicious": 465,
+      "alert_rate": 0.93,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 76020.2468,
+          "baseline_mean": 63818.2,
+          "z_score": 0.026,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 20856.3325,
+          "baseline_mean": 19583.196,
+          "z_score": 0.052,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 15453.688,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.007,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 415.344,
+          "baseline_mean": 378.7774,
+          "z_score": 0.047,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 215.7322,
+          "baseline_mean": 198.3458,
+          "z_score": 0.057,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 35,
+        "1": 465
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=20 | alert_rate=93.0% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 21,
+      "batch_size": 500,
+      "n_malicious": 479,
+      "alert_rate": 0.958,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 43954.6884,
+          "baseline_mean": 63818.2,
+          "z_score": 0.042,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 21703.2853,
+          "baseline_mean": 19583.196,
+          "z_score": 0.087,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16404.766,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.035,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 365.932,
+          "baseline_mean": 378.7774,
           "z_score": 0.017,
           "drifted": false
         },
-        "Max": {
-          "current_mean": 399.824,
-          "baseline_mean": 381.9132,
-          "z_score": 0.024,
-          "drifted": false
-        },
         "AVG": {
-          "current_mean": 192.5788,
-          "baseline_mean": 198.9157,
-          "z_score": 0.021,
+          "current_mean": 189.2075,
+          "baseline_mean": 198.3458,
+          "z_score": 0.03,
           "drifted": false
         }
       },
       "pred_distribution": {
-        "0": 37,
-        "1": 463
+        "0": 21,
+        "1": 479
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=48 | alert_rate=92.6% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=21 | alert_rate=95.8% (threshold=60%)"
       ]
     },
     {
-      "batch_idx": 49,
+      "batch_idx": 22,
+      "batch_size": 500,
+      "n_malicious": 478,
+      "alert_rate": 0.956,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 111877.5503,
+          "baseline_mean": 63818.2,
+          "z_score": 0.102,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 19264.1166,
+          "baseline_mean": 19583.196,
+          "z_score": 0.013,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16190.176,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.026,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 379.452,
+          "baseline_mean": 378.7774,
+          "z_score": 0.001,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 197.0256,
+          "baseline_mean": 198.3458,
+          "z_score": 0.004,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 22,
+        "1": 478
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=22 | alert_rate=95.6% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 23,
+      "batch_size": 500,
+      "n_malicious": 479,
+      "alert_rate": 0.958,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 34341.4805,
+          "baseline_mean": 63818.2,
+          "z_score": 0.063,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 21140.1078,
+          "baseline_mean": 19583.196,
+          "z_score": 0.064,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 14795.996,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.036,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 309.35,
+          "baseline_mean": 378.7774,
+          "z_score": 0.09,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 166.7403,
+          "baseline_mean": 198.3458,
+          "z_score": 0.104,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 21,
+        "1": 479
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=23 | alert_rate=95.8% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 24,
+      "batch_size": 500,
+      "n_malicious": 482,
+      "alert_rate": 0.964,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 40126.0609,
+          "baseline_mean": 63818.2,
+          "z_score": 0.05,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 21843.7146,
+          "baseline_mean": 19583.196,
+          "z_score": 0.092,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 14235.81,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.061,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 314.614,
+          "baseline_mean": 378.7774,
+          "z_score": 0.083,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 164.9481,
+          "baseline_mean": 198.3458,
+          "z_score": 0.11,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 18,
+        "1": 482
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=24 | alert_rate=96.4% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 25,
+      "batch_size": 500,
+      "n_malicious": 479,
+      "alert_rate": 0.958,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 46424.0567,
+          "baseline_mean": 63818.2,
+          "z_score": 0.037,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 21855.0923,
+          "baseline_mean": 19583.196,
+          "z_score": 0.093,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16802.006,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.053,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 359.466,
+          "baseline_mean": 378.7774,
+          "z_score": 0.025,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 193.7349,
+          "baseline_mean": 198.3458,
+          "z_score": 0.015,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 21,
+        "1": 479
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=25 | alert_rate=95.8% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 26,
+      "batch_size": 500,
+      "n_malicious": 486,
+      "alert_rate": 0.972,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 29628.5259,
+          "baseline_mean": 63818.2,
+          "z_score": 0.073,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 21245.1548,
+          "baseline_mean": 19583.196,
+          "z_score": 0.068,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 14918.316,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.031,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 296.9,
+          "baseline_mean": 378.7774,
+          "z_score": 0.106,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 174.1813,
+          "baseline_mean": 198.3458,
+          "z_score": 0.08,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 14,
+        "1": 486
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=26 | alert_rate=97.2% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 27,
+      "batch_size": 500,
+      "n_malicious": 473,
+      "alert_rate": 0.946,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 73602.6393,
+          "baseline_mean": 63818.2,
+          "z_score": 0.021,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 20456.599,
+          "baseline_mean": 19583.196,
+          "z_score": 0.036,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 14361.174,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.055,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 321.634,
+          "baseline_mean": 378.7774,
+          "z_score": 0.074,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 178.9469,
+          "baseline_mean": 198.3458,
+          "z_score": 0.064,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 27,
+        "1": 473
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=27 | alert_rate=94.6% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 28,
+      "batch_size": 500,
+      "n_malicious": 485,
+      "alert_rate": 0.97,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 38284.4502,
+          "baseline_mean": 63818.2,
+          "z_score": 0.054,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 19326.7191,
+          "baseline_mean": 19583.196,
+          "z_score": 0.01,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 15159.288,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.02,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 305.266,
+          "baseline_mean": 378.7774,
+          "z_score": 0.095,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 174.9916,
+          "baseline_mean": 198.3458,
+          "z_score": 0.077,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 15,
+        "1": 485
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=28 | alert_rate=97.0% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 29,
+      "batch_size": 500,
+      "n_malicious": 481,
+      "alert_rate": 0.962,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 35978.1916,
+          "baseline_mean": 63818.2,
+          "z_score": 0.059,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 21625.0758,
+          "baseline_mean": 19583.196,
+          "z_score": 0.083,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 15607.174,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.0,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 297.336,
+          "baseline_mean": 378.7774,
+          "z_score": 0.106,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 180.7996,
+          "baseline_mean": 198.3458,
+          "z_score": 0.058,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 19,
+        "1": 481
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=29 | alert_rate=96.2% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 30,
+      "batch_size": 500,
+      "n_malicious": 481,
+      "alert_rate": 0.962,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 50223.1891,
+          "baseline_mean": 63818.2,
+          "z_score": 0.029,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 19966.3803,
+          "baseline_mean": 19583.196,
+          "z_score": 0.016,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 17643.822,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.09,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 374.732,
+          "baseline_mean": 378.7774,
+          "z_score": 0.005,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 214.3003,
+          "baseline_mean": 198.3458,
+          "z_score": 0.053,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 19,
+        "1": 481
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=30 | alert_rate=96.2% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 31,
+      "batch_size": 500,
+      "n_malicious": 467,
+      "alert_rate": 0.934,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 64621.6347,
+          "baseline_mean": 63818.2,
+          "z_score": 0.002,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 19222.1559,
+          "baseline_mean": 19583.196,
+          "z_score": 0.015,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 14627.28,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.044,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 419.162,
+          "baseline_mean": 378.7774,
+          "z_score": 0.052,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 191.4447,
+          "baseline_mean": 198.3458,
+          "z_score": 0.023,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 33,
+        "1": 467
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=31 | alert_rate=93.4% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 32,
+      "batch_size": 500,
+      "n_malicious": 464,
+      "alert_rate": 0.928,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 94748.3765,
+          "baseline_mean": 63818.2,
+          "z_score": 0.066,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 23215.1134,
+          "baseline_mean": 19583.196,
+          "z_score": 0.148,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 14489.274,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.05,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 416.392,
+          "baseline_mean": 378.7774,
+          "z_score": 0.049,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 193.3274,
+          "baseline_mean": 198.3458,
+          "z_score": 0.017,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 36,
+        "1": 464
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=32 | alert_rate=92.8% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 33,
+      "batch_size": 500,
+      "n_malicious": 466,
+      "alert_rate": 0.932,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 80835.988,
+          "baseline_mean": 63818.2,
+          "z_score": 0.036,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 17761.4743,
+          "baseline_mean": 19583.196,
+          "z_score": 0.074,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16406.126,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.035,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 411.148,
+          "baseline_mean": 378.7774,
+          "z_score": 0.042,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 207.1725,
+          "baseline_mean": 198.3458,
+          "z_score": 0.029,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 34,
+        "1": 466
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=33 | alert_rate=93.2% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 34,
       "batch_size": 500,
       "n_malicious": 463,
       "alert_rate": 0.926,
@@ -2266,33 +1560,33 @@
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 91195.8885,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.08,
+          "current_mean": 67520.5997,
+          "baseline_mean": 63818.2,
+          "z_score": 0.008,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 21175.2357,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.048,
+          "current_mean": 21033.9937,
+          "baseline_mean": 19583.196,
+          "z_score": 0.059,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 16194.534,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.028,
+          "current_mean": 15799.858,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.008,
           "drifted": false
         },
         "Max": {
-          "current_mean": 438.556,
-          "baseline_mean": 381.9132,
-          "z_score": 0.077,
+          "current_mean": 411.298,
+          "baseline_mean": 378.7774,
+          "z_score": 0.042,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 213.9784,
-          "baseline_mean": 198.9157,
-          "z_score": 0.05,
+          "current_mean": 211.9826,
+          "baseline_mean": 198.3458,
+          "z_score": 0.045,
           "drifted": false
         }
       },
@@ -2301,11 +1595,105 @@
         "1": 463
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=49 | alert_rate=92.6% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=34 | alert_rate=92.6% (threshold=60%)"
       ]
     },
     {
-      "batch_idx": 50,
+      "batch_idx": 35,
+      "batch_size": 500,
+      "n_malicious": 475,
+      "alert_rate": 0.95,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 35721.2093,
+          "baseline_mean": 63818.2,
+          "z_score": 0.06,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 19148.5421,
+          "baseline_mean": 19583.196,
+          "z_score": 0.018,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 15258.424,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.016,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 331.608,
+          "baseline_mean": 378.7774,
+          "z_score": 0.061,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 178.1469,
+          "baseline_mean": 198.3458,
+          "z_score": 0.067,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 25,
+        "1": 475
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=35 | alert_rate=95.0% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 36,
+      "batch_size": 500,
+      "n_malicious": 454,
+      "alert_rate": 0.908,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 71590.7293,
+          "baseline_mean": 63818.2,
+          "z_score": 0.017,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 23112.9266,
+          "baseline_mean": 19583.196,
+          "z_score": 0.144,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 13705.298,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.084,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 392.016,
+          "baseline_mean": 378.7774,
+          "z_score": 0.017,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 186.1757,
+          "baseline_mean": 198.3458,
+          "z_score": 0.04,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 46,
+        "1": 454
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=36 | alert_rate=90.8% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 37,
       "batch_size": 500,
       "n_malicious": 462,
       "alert_rate": 0.924,
@@ -2313,33 +1701,33 @@
       "n_drift_warnings": 0,
       "drift_details": {
         "Variance": {
-          "current_mean": 61096.7758,
-          "baseline_mean": 63864.2969,
-          "z_score": 0.008,
+          "current_mean": 48195.216,
+          "baseline_mean": 63818.2,
+          "z_score": 0.033,
           "drifted": false
         },
         "Rate": {
-          "current_mean": 22567.0697,
-          "baseline_mean": 19941.3114,
-          "z_score": 0.101,
+          "current_mean": 20137.1982,
+          "baseline_mean": 19583.196,
+          "z_score": 0.023,
           "drifted": false
         },
         "Tot sum": {
-          "current_mean": 14122.31,
-          "baseline_mean": 15553.8716,
-          "z_score": 0.063,
+          "current_mean": 16770.572,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.052,
           "drifted": false
         },
         "Max": {
-          "current_mean": 340.554,
-          "baseline_mean": 381.9132,
-          "z_score": 0.056,
+          "current_mean": 371.98,
+          "baseline_mean": 378.7774,
+          "z_score": 0.009,
           "drifted": false
         },
         "AVG": {
-          "current_mean": 178.1936,
-          "baseline_mean": 198.9157,
-          "z_score": 0.068,
+          "current_mean": 215.4522,
+          "baseline_mean": 198.3458,
+          "z_score": 0.057,
           "drifted": false
         }
       },
@@ -2348,16 +1736,627 @@
         "1": 462
       },
       "warnings": [
-        "CRITICAL ALERT SPIKE | batch=50 | alert_rate=92.4% (threshold=60%)"
+        "CRITICAL ALERT SPIKE | batch=37 | alert_rate=92.4% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 38,
+      "batch_size": 500,
+      "n_malicious": 474,
+      "alert_rate": 0.948,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 43589.3557,
+          "baseline_mean": 63818.2,
+          "z_score": 0.043,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 19568.4409,
+          "baseline_mean": 19583.196,
+          "z_score": 0.001,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 15530.802,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.003,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 367.486,
+          "baseline_mean": 378.7774,
+          "z_score": 0.015,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 190.2998,
+          "baseline_mean": 198.3458,
+          "z_score": 0.027,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 26,
+        "1": 474
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=38 | alert_rate=94.8% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 39,
+      "batch_size": 500,
+      "n_malicious": 466,
+      "alert_rate": 0.932,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 83217.6963,
+          "baseline_mean": 63818.2,
+          "z_score": 0.041,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 20667.0193,
+          "baseline_mean": 19583.196,
+          "z_score": 0.044,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 15796.5,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.008,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 381.78,
+          "baseline_mean": 378.7774,
+          "z_score": 0.004,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 195.8932,
+          "baseline_mean": 198.3458,
+          "z_score": 0.008,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 34,
+        "1": 466
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=39 | alert_rate=93.2% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 40,
+      "batch_size": 500,
+      "n_malicious": 457,
+      "alert_rate": 0.914,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 61867.743,
+          "baseline_mean": 63818.2,
+          "z_score": 0.004,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 18446.8476,
+          "baseline_mean": 19583.196,
+          "z_score": 0.046,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16357.97,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.033,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 414.296,
+          "baseline_mean": 378.7774,
+          "z_score": 0.046,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 213.9577,
+          "baseline_mean": 198.3458,
+          "z_score": 0.052,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 43,
+        "1": 457
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=40 | alert_rate=91.4% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 41,
+      "batch_size": 500,
+      "n_malicious": 467,
+      "alert_rate": 0.934,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 51921.1712,
+          "baseline_mean": 63818.2,
+          "z_score": 0.025,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 22048.3665,
+          "baseline_mean": 19583.196,
+          "z_score": 0.101,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16138.74,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.024,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 354.658,
+          "baseline_mean": 378.7774,
+          "z_score": 0.031,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 197.5647,
+          "baseline_mean": 198.3458,
+          "z_score": 0.003,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 33,
+        "1": 467
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=41 | alert_rate=93.4% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 42,
+      "batch_size": 500,
+      "n_malicious": 461,
+      "alert_rate": 0.922,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 106234.7913,
+          "baseline_mean": 63818.2,
+          "z_score": 0.09,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 19552.3304,
+          "baseline_mean": 19583.196,
+          "z_score": 0.001,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 15698.978,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.004,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 444.206,
+          "baseline_mean": 378.7774,
+          "z_score": 0.085,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 230.3822,
+          "baseline_mean": 198.3458,
+          "z_score": 0.106,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 39,
+        "1": 461
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=42 | alert_rate=92.2% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 43,
+      "batch_size": 500,
+      "n_malicious": 468,
+      "alert_rate": 0.936,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 45908.144,
+          "baseline_mean": 63818.2,
+          "z_score": 0.038,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 18357.1825,
+          "baseline_mean": 19583.196,
+          "z_score": 0.05,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16263.924,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.029,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 345.06,
+          "baseline_mean": 378.7774,
+          "z_score": 0.044,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 193.3955,
+          "baseline_mean": 198.3458,
+          "z_score": 0.016,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 32,
+        "1": 468
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=43 | alert_rate=93.6% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 44,
+      "batch_size": 500,
+      "n_malicious": 460,
+      "alert_rate": 0.92,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 87093.4889,
+          "baseline_mean": 63818.2,
+          "z_score": 0.05,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 21765.819,
+          "baseline_mean": 19583.196,
+          "z_score": 0.089,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16743.4,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.05,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 435.424,
+          "baseline_mean": 378.7774,
+          "z_score": 0.074,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 219.5665,
+          "baseline_mean": 198.3458,
+          "z_score": 0.07,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 40,
+        "1": 460
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=44 | alert_rate=92.0% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 45,
+      "batch_size": 500,
+      "n_malicious": 477,
+      "alert_rate": 0.954,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 42238.9327,
+          "baseline_mean": 63818.2,
+          "z_score": 0.046,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 20830.1366,
+          "baseline_mean": 19583.196,
+          "z_score": 0.051,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 17229.58,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.072,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 364.996,
+          "baseline_mean": 378.7774,
+          "z_score": 0.018,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 207.9725,
+          "baseline_mean": 198.3458,
+          "z_score": 0.032,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 23,
+        "1": 477
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=45 | alert_rate=95.4% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 46,
+      "batch_size": 500,
+      "n_malicious": 465,
+      "alert_rate": 0.93,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 50371.5562,
+          "baseline_mean": 63818.2,
+          "z_score": 0.029,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 18240.4748,
+          "baseline_mean": 19583.196,
+          "z_score": 0.055,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16386.82,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.035,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 375.04,
+          "baseline_mean": 378.7774,
+          "z_score": 0.005,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 209.0414,
+          "baseline_mean": 198.3458,
+          "z_score": 0.035,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 35,
+        "1": 465
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=46 | alert_rate=93.0% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 47,
+      "batch_size": 500,
+      "n_malicious": 475,
+      "alert_rate": 0.95,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 55728.7515,
+          "baseline_mean": 63818.2,
+          "z_score": 0.017,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 19556.1748,
+          "baseline_mean": 19583.196,
+          "z_score": 0.001,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 14202.312,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.062,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 345.94,
+          "baseline_mean": 378.7774,
+          "z_score": 0.043,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 173.0629,
+          "baseline_mean": 198.3458,
+          "z_score": 0.084,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 25,
+        "1": 475
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=47 | alert_rate=95.0% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 48,
+      "batch_size": 500,
+      "n_malicious": 466,
+      "alert_rate": 0.932,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 78260.9591,
+          "baseline_mean": 63818.2,
+          "z_score": 0.031,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 18640.8328,
+          "baseline_mean": 19583.196,
+          "z_score": 0.038,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 17442.668,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.081,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 398.916,
+          "baseline_mean": 378.7774,
+          "z_score": 0.026,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 226.9121,
+          "baseline_mean": 198.3458,
+          "z_score": 0.094,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 34,
+        "1": 466
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=48 | alert_rate=93.2% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 49,
+      "batch_size": 500,
+      "n_malicious": 467,
+      "alert_rate": 0.934,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 54325.9822,
+          "baseline_mean": 63818.2,
+          "z_score": 0.02,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 20090.3142,
+          "baseline_mean": 19583.196,
+          "z_score": 0.021,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 14801.49,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.036,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 356.146,
+          "baseline_mean": 378.7774,
+          "z_score": 0.029,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 194.2065,
+          "baseline_mean": 198.3458,
+          "z_score": 0.014,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 33,
+        "1": 467
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=49 | alert_rate=93.4% (threshold=60%)"
+      ]
+    },
+    {
+      "batch_idx": 50,
+      "batch_size": 500,
+      "n_malicious": 472,
+      "alert_rate": 0.944,
+      "alert_level": "CRITICAL",
+      "n_drift_warnings": 0,
+      "drift_details": {
+        "Variance": {
+          "current_mean": 41108.68,
+          "baseline_mean": 63818.2,
+          "z_score": 0.048,
+          "drifted": false
+        },
+        "Rate": {
+          "current_mean": 20971.7115,
+          "baseline_mean": 19583.196,
+          "z_score": 0.057,
+          "drifted": false
+        },
+        "Tot sum": {
+          "current_mean": 16961.162,
+          "baseline_mean": 15608.6608,
+          "z_score": 0.06,
+          "drifted": false
+        },
+        "Max": {
+          "current_mean": 347.326,
+          "baseline_mean": 378.7774,
+          "z_score": 0.041,
+          "drifted": false
+        },
+        "AVG": {
+          "current_mean": 210.5091,
+          "baseline_mean": 198.3458,
+          "z_score": 0.04,
+          "drifted": false
+        }
+      },
+      "pred_distribution": {
+        "0": 28,
+        "1": 472
+      },
+      "warnings": [
+        "CRITICAL ALERT SPIKE | batch=50 | alert_rate=94.4% (threshold=60%)"
       ]
     }
   ],
   "summary": {
     "total_batches": 50,
     "total_records": 25000,
-    "mean_alert_rate": 0.9316,
-    "max_alert_rate": 0.966,
-    "mean_drift_warnings_per_batch": 0.02,
+    "mean_alert_rate": 0.9346,
+    "max_alert_rate": 0.972,
+    "mean_drift_warnings_per_batch": 0.0,
     "n_critical_batches": 50,
     "n_warning_batches": 0
   }

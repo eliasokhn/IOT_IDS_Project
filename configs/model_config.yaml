@@ -1,24 +1,38 @@
 # Logistic Regression
 logistic_regression:
   C: 1.0
-  max_iter: 2000
+  max_iter: 500
   class_weight: "balanced"
   solver: "lbfgs"
   n_jobs: -1
   random_state: 42
+  # Per-task BENIGN boost on top of balanced weights.
+  # binary: 2.0 — good FPR gain with acceptable F1 tradeoff
+  # 8class: 2.5 — excellent (FPR halved, F1 unchanged)
+  # 34class: 1.0 — no boost: LR 34-class is already near-linear capacity limit;
+  #   the boost combined with non-convergence at 500 iters pushes it to a worse
+  #   stopping point. Pure balanced weights give the best reachable result.
+  benign_weight_multiplier:
+    binary: 2.0
+    8class: 2.5
+    34class: 1.0
 
 # Gradient Boosting
 gradient_boosting:
-  max_iter: 500
+  max_iter: 1000
   learning_rate: 0.05
-  max_depth: 7
-  min_samples_leaf: 50
-  l2_regularization: 0.5
+  max_depth: 8
+  min_samples_leaf: 20
+  l2_regularization: 0.3
+  l1_regularization: 0.1
+  subsample: 0.8
+  colsample_bytree: 0.8
   class_weight: "balanced"
   early_stopping: true
   validation_fraction: 0.1
   n_iter_no_change: 30
   random_state: 42
+  benign_weight_multiplier: 2.5   # extra weight on BENIGN on top of balanced
 
 # GPU Configuration
 # use_gpu: true  -> auto-detect GPU, use LightGBM GPU if available

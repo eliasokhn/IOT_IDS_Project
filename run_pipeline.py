@@ -8,13 +8,15 @@ One-command full pipeline. Includes all three fixes:
 
 Usage
 -----
-    python run_pipeline.py                  # demo data, all tasks
-    python run_pipeline.py --real-data      # real 63 CSV files
-    python run_pipeline.py --sample-frac 0.30  # use 30% per class (default)
-    python run_pipeline.py --skip-train     # skip training, run evaluation only
+    python run_pipeline.py                                    # demo data
+    python run_pipeline.py --real-data                        # 40% sample for all
+    python run_pipeline.py --real-data --lr-sample-frac 0.30  # GB=40%, LR=30%
+    python run_pipeline.py --skip-train                       # eval only
+    python run_pipeline.py --real-data --models gb --tasks binary 8class
 """
 
 import argparse, logging, os, sys, pickle, json, glob
+import numpy as np
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
@@ -22,15 +24,54 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
+# BENIGN class index per task.
+# 34-class labels are sorted alphabetically: BACKDOOR_MALWARE=0, BENIGN=1.
+# Must be 1 for 34class — using 0 would measure BACKDOOR_MALWARE's error rate.
+BENIGN_IDX = {"binary": 0, "8class": 0, "34class": 1}
+
 
 def parse_args():
     p = argparse.ArgumentParser(description="IoT IDS Full Pipeline v2")
-    p.add_argument("--real-data",    action="store_true")
-    p.add_argument("--skip-train",   action="store_true")
-    p.add_argument("--sample-frac",  type=float, default=0.30)
+    p.add_argument("--real-data",       action="store_true")
+    p.add_argument("--skip-train",      action="store_true")
+    p.add_argument("--sample-frac",     type=float, default=0.40,
+                   help="Sample fraction for GB (and LR if --lr-sample-frac not set)")
+    p.add_argument("--lr-sample-frac",  type=float, default=None,
+                   help="Sample fraction for LR only. If smaller than --sample-frac, "
+                        "LR training data is subsampled from the already-loaded dataset. "
+                        "Data loading/dedup uses --sample-frac (the larger value).")
     p.add_argument("--tasks",   nargs="+", default=["binary","8class","34class"])
     p.add_argument("--models",  nargs="+", default=["lr","gb"])
     return p.parse_args()
+
+
+def _subsample_train(X_train, splits_data, tasks, target_n, random_state=42):
+    """
+    Stratified subsample of X_train + all y_train arrays down to target_n rows.
+    Stratifies on the 34-class labels for maximum representativeness.
+    """
+    y_34 = splits_data["y_train_34class"]
+    rng  = np.random.RandomState(random_state)
+
+    # Stratified sampling: keep proportional class counts
+    classes, counts = np.unique(y_34, return_counts=True)
+    ratio = target_n / len(X_train)
+    keep_idx = []
+    for cls, cnt in zip(classes, counts):
+        cls_idx = np.where(y_34 == cls)[0]
+        n_keep  = max(1, int(round(cnt * ratio)))
+        n_keep  = min(n_keep, len(cls_idx))
+        chosen  = rng.choice(cls_idx, size=n_keep, replace=False)
+        keep_idx.extend(chosen.tolist())
+
+    keep_idx = np.array(sorted(keep_idx))
+    X_sub = X_train[keep_idx]
+    y_sub = {task: splits_data[f"y_train_{task}"][keep_idx] for task in tasks}
+    log.info(
+        f"LR training data subsampled: {len(X_train):,} → {len(X_sub):,} rows "
+        f"({100*len(X_sub)/len(X_train):.1f}% of full train set)"
+    )
+    return X_sub, y_sub
 
 
 def step_load_data(use_demo: bool, sample_frac: float):
@@ -63,11 +104,9 @@ def step_preprocess(df):
     from src.models.model_utils import save_class_names
     from src.data.label_mapping import BINARY_CLASS_NAMES, CATEGORY_CLASS_NAMES, FINE_CLASS_NAMES
 
-    # FIX 1: deduplicate BEFORE splitting
     log.info("FIX 1: Deduplicating...")
     df = deduplicate(df, label_col="label", random_state=42)
 
-    # Split once on 34-class labels
     train_df, val_df, test_df = create_splits(
         df, train_frac=0.70, val_frac=0.15, test_frac=0.15,
         stratify_col="label_fine", random_state=42,
@@ -77,7 +116,6 @@ def step_preprocess(df):
     X_train_raw, _ = get_X_y(train_df, "binary")
     os.makedirs("models", exist_ok=True)
 
-    # FIX 2+3: one-hot Protocol Type, drop Variance, RobustScaler
     log.info("FIX 2+3: Fitting preprocessor (one-hot + RobustScaler)...")
     preprocessor = build_and_fit_preprocessor(X_train_raw, save_path="models/preprocessor.pkl")
 
@@ -106,7 +144,7 @@ def step_preprocess(df):
     return splits_data
 
 
-def step_train(splits_data, tasks, models_to_train):
+def step_train(splits_data, tasks, models_to_train, lr_sample_frac=None, gb_sample_frac=None):
     log.info("="*60 + "\nSTEP 3: Model training\n" + "="*60)
     from src.models.train_lr import train_logistic_regression
     from src.models.train_gb import train_gradient_boosting
@@ -116,17 +154,39 @@ def step_train(splits_data, tasks, models_to_train):
 
     os.makedirs("reports", exist_ok=True)
     all_metrics = []
-    X_train = splits_data["X_train"]
-    X_test  = splits_data["X_test"]
+    X_train_full = splits_data["X_train"]
+    X_test       = splits_data["X_test"]
+
+    # Precompute subsampled LR training data if a smaller frac was requested
+    if lr_sample_frac and gb_sample_frac and lr_sample_frac < gb_sample_frac:
+        target_n = int(len(X_train_full) * lr_sample_frac / gb_sample_frac)
+        log.info(
+            f"LR will train on {lr_sample_frac*100:.0f}% data "
+            f"({target_n:,} rows), GB on {gb_sample_frac*100:.0f}% "
+            f"({len(X_train_full):,} rows)."
+        )
+        X_train_lr, y_train_lr_map = _subsample_train(
+            X_train_full, splits_data, tasks, target_n
+        )
+    else:
+        X_train_lr, y_train_lr_map = None, None
 
     fns = {}
     if "lr" in models_to_train: fns["lr"] = train_logistic_regression
     if "gb" in models_to_train: fns["gb"] = train_gradient_boosting
 
     for model_key, train_fn in fns.items():
+        # Pick the right training set for this model
+        if model_key == "lr" and X_train_lr is not None:
+            X_train = X_train_lr
+            y_train_src = y_train_lr_map
+        else:
+            X_train = X_train_full
+            y_train_src = None   # will read from splits_data below
+
         for task in tasks:
             log.info(f"\n--- {model_key.upper()} | {task} ---")
-            y_train = splits_data[f"y_train_{task}"]
+            y_train = y_train_src[task] if y_train_src else splits_data[f"y_train_{task}"]
             y_test  = splits_data[f"y_test_{task}"]
             cn = get_class_names(task)
 
@@ -135,7 +195,8 @@ def step_train(splits_data, tasks, models_to_train):
             y_pred  = model.predict(X_test)
             y_proba = model.predict_proba(X_test)
             m = compute_all_metrics(y_test, y_pred, y_proba, cn,
-                                    task=task, model_name=model_key)
+                                    task=task, model_name=model_key,
+                                    benign_class_idx=BENIGN_IDX.get(task, 0))
             save_metrics(m, f"reports/metrics_{model_key}_{task}.json")
 
             fs = (16,14) if task == "34class" else (10,8)
@@ -213,10 +274,17 @@ def main():
     log.info("║  IoT IDS Pipeline v2 — All Fixes Applied    ║")
     log.info("╚══════════════════════════════════════════════╝")
 
+    lr_frac = args.lr_sample_frac if args.lr_sample_frac else args.sample_frac
+    gb_frac = args.sample_frac
+
     if not args.skip_train:
-        df = step_load_data(not args.real_data, args.sample_frac)
+        df = step_load_data(not args.real_data, gb_frac)
         splits_data = step_preprocess(df)
-        all_metrics = step_train(splits_data, args.tasks, args.models)
+        all_metrics = step_train(
+            splits_data, args.tasks, args.models,
+            lr_sample_frac=lr_frac,
+            gb_sample_frac=gb_frac,
+        )
         step_evaluate(all_metrics)
     else:
         log.info("Skipping training — loading saved metrics...")

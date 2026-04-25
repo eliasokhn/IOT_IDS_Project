@@ -5,13 +5,12 @@ dataset:
   split_indices: "data/processed/split_indices.pkl"
   random_state: 42
 
-  # Sampling strategy
-  # sample_mode: "balanced"   <- RECOMMENDED (fixes imbalance properly)
-  # sample_mode: "stratified" <- simpler, keeps raw imbalance ratio
-  sample_mode: "balanced"
-  sample_frac: 0.30           # only used when sample_mode is "stratified"
-  balanced_floor: 2000        # rare classes oversampled to this (train only)
-  balanced_ceiling: 80000     # dominant classes capped at this (6GB VRAM safe)
+  # Sampling strategy: "stratified" keeps real class proportions (better F1).
+  # "balanced" uses floor/ceiling (available in loader.py but hurts F1).
+  sample_mode: "stratified"
+  sample_frac: 0.40
+  balanced_floor: 2000
+  balanced_ceiling: 80000
 
 split:
   train_frac: 0.70
