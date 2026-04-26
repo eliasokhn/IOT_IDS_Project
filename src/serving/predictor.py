@@ -115,7 +115,7 @@ class Predictor:
             else str(pred_idx)
         )
 
-        is_malicious = (pred_idx != 0)  # class 0 is always Benign
+        is_malicious = predicted_label.upper() != "BENIGN"
 
         return {
             "predicted_class": pred_idx,
@@ -167,7 +167,7 @@ class Predictor:
                     for j, p in enumerate(proba)
                     if j < len(self.class_names)
                 },
-                "is_malicious": pred_idx != 0,
+                "is_malicious": predicted_label.upper() != "BENIGN",
                 "model": self.model_name,
                 "task": self.task,
             })

@@ -596,84 +596,84 @@ const TOGGLE_FIELDS = [
   "TCP", "UDP", "DHCP", "ARP", "ICMP", "IGMP", "LLC"
 ];
 
-// ─── Presets ──────────────────────────────────────────────────────────────────
+// ─── Presets — values derived from real CICIoT2023 test samples ──────────────
 const PRESETS = {
   benign: {
     "Protocol Type": 6,
-    Header_Length: 32, Time_To_Live: 64, Rate: 150, Number: 20, IAT: 0.05,
-    "Tot sum": 9800, "Tot size": 9800, Min: 40, Max: 1460, AVG: 490, Std: 380,
+    Header_Length: 32.8, Time_To_Live: 147, Rate: 50.4, Number: 10, IAT: 0.0198,
+    "Tot sum": 848, "Tot size": 84.8, Min: 66, Max: 156, AVG: 84.8, Std: 37.6,
     IPv: 1,
     fin_flag_number: 0, syn_flag_number: 0, rst_flag_number: 0,
-    psh_flag_number: 1, ack_flag_number: 1, ece_flag_number: 0, cwr_flag_number: 0,
-    ack_count: 18, syn_count: 1, fin_count: 1, rst_count: 0,
+    psh_flag_number: 0, ack_flag_number: 1, ece_flag_number: 0, cwr_flag_number: 0,
+    ack_count: 9, syn_count: 1, fin_count: 0, rst_count: 0,
     HTTP: 0, HTTPS: 1, DNS: 0, Telnet: 0, SMTP: 0, SSH: 0, IRC: 0,
-    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 0
+    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 1
   },
   ddos_syn: {
     "Protocol Type": 6,
-    Header_Length: 20, Time_To_Live: 128, Rate: 95000, Number: 9500, IAT: 0.00001,
-    "Tot sum": 190000, "Tot size": 190000, Min: 20, Max: 20, AVG: 20, Std: 0,
+    Header_Length: 20, Time_To_Live: 66, Rate: 42808, Number: 100, IAT: 0.000023,
+    "Tot sum": 6006, "Tot size": 60, Min: 60, Max: 66, AVG: 60, Std: 0.6,
     IPv: 1,
     fin_flag_number: 0, syn_flag_number: 1, rst_flag_number: 0,
     psh_flag_number: 0, ack_flag_number: 0, ece_flag_number: 0, cwr_flag_number: 0,
-    ack_count: 0, syn_count: 9500, fin_count: 0, rst_count: 500,
-    HTTP: 0, HTTPS: 0, DNS: 0, Telnet: 0, SMTP: 0, SSH: 0, IRC: 0,
-    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 0
+    ack_count: 1, syn_count: 99, fin_count: 1, rst_count: 0,
+    HTTP: 1, HTTPS: 0, DNS: 0, Telnet: 0, SMTP: 0, SSH: 0, IRC: 0,
+    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 1
   },
   ddos_udp: {
     "Protocol Type": 17,
-    Header_Length: 8, Time_To_Live: 64, Rate: 80000, Number: 8000, IAT: 0.0000125,
-    "Tot sum": 6400000, "Tot size": 6400000, Min: 500, Max: 1400, AVG: 800, Std: 200,
+    Header_Length: 8, Time_To_Live: 63, Rate: 48333, Number: 100, IAT: 0.000021,
+    "Tot sum": 6014, "Tot size": 60, Min: 60, Max: 74, AVG: 60, Std: 1.4,
     IPv: 1,
     fin_flag_number: 0, syn_flag_number: 0, rst_flag_number: 0,
     psh_flag_number: 0, ack_flag_number: 0, ece_flag_number: 0, cwr_flag_number: 0,
     ack_count: 0, syn_count: 0, fin_count: 0, rst_count: 0,
     HTTP: 0, HTTPS: 0, DNS: 0, Telnet: 0, SMTP: 0, SSH: 0, IRC: 0,
-    TCP: 0, UDP: 1, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 0
+    TCP: 0, UDP: 1, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 1
   },
   dos_http: {
     "Protocol Type": 6,
-    Header_Length: 32, Time_To_Live: 64, Rate: 4500, Number: 900, IAT: 0.00022,
-    "Tot sum": 540000, "Tot size": 540000, Min: 60, Max: 1460, AVG: 600, Std: 380,
+    Header_Length: 29, Time_To_Live: 66, Rate: 1630, Number: 100, IAT: 0.000614,
+    "Tot sum": 88146, "Tot size": 881, Min: 60, Max: 2962, AVG: 881, Std: 891,
     IPv: 1,
     fin_flag_number: 0, syn_flag_number: 0, rst_flag_number: 0,
-    psh_flag_number: 1, ack_flag_number: 1, ece_flag_number: 0, cwr_flag_number: 0,
-    ack_count: 900, syn_count: 50, fin_count: 0, rst_count: 30,
+    psh_flag_number: 0, ack_flag_number: 1, ece_flag_number: 0, cwr_flag_number: 0,
+    ack_count: 74, syn_count: 2, fin_count: 0, rst_count: 24,
     HTTP: 1, HTTPS: 0, DNS: 0, Telnet: 0, SMTP: 0, SSH: 0, IRC: 0,
-    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 0
+    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 1
   },
   portscan: {
     "Protocol Type": 6,
-    Header_Length: 20, Time_To_Live: 64, Rate: 200, Number: 500, IAT: 0.005,
-    "Tot sum": 10000, "Tot size": 10000, Min: 20, Max: 20, AVG: 20, Std: 0,
+    Header_Length: 21, Time_To_Live: 58, Rate: 1166, Number: 10, IAT: 0.000857,
+    "Tot sum": 600, "Tot size": 60, Min: 60, Max: 60, AVG: 60, Std: 0,
     IPv: 1,
-    fin_flag_number: 0, syn_flag_number: 1, rst_flag_number: 1,
-    psh_flag_number: 0, ack_flag_number: 0, ece_flag_number: 0, cwr_flag_number: 0,
-    ack_count: 0, syn_count: 500, fin_count: 0, rst_count: 480,
+    fin_flag_number: 0, syn_flag_number: 0, rst_flag_number: 1,
+    psh_flag_number: 0, ack_flag_number: 1, ece_flag_number: 0, cwr_flag_number: 0,
+    ack_count: 7, syn_count: 3, fin_count: 0, rst_count: 7,
     HTTP: 0, HTTPS: 0, DNS: 0, Telnet: 0, SMTP: 0, SSH: 0, IRC: 0,
-    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 0
+    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 1
   },
   mirai: {
     "Protocol Type": 17,
-    Header_Length: 8, Time_To_Live: 64, Rate: 60000, Number: 6000, IAT: 0.0000167,
-    "Tot sum": 4800000, "Tot size": 4800000, Min: 400, Max: 1000, AVG: 800, Std: 150,
+    Header_Length: 8, Time_To_Live: 64, Rate: 3536, Number: 100, IAT: 0.000283,
+    "Tot sum": 54906, "Tot size": 549, Min: 60, Max: 554, AVG: 549, Std: 49,
     IPv: 1,
     fin_flag_number: 0, syn_flag_number: 0, rst_flag_number: 0,
     psh_flag_number: 0, ack_flag_number: 0, ece_flag_number: 0, cwr_flag_number: 0,
     ack_count: 0, syn_count: 0, fin_count: 0, rst_count: 0,
     HTTP: 0, HTTPS: 0, DNS: 0, Telnet: 0, SMTP: 0, SSH: 0, IRC: 0,
-    TCP: 0, UDP: 1, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 0
+    TCP: 0, UDP: 1, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 1
   },
   bruteforce: {
     "Protocol Type": 6,
-    Header_Length: 32, Time_To_Live: 64, Rate: 25, Number: 120, IAT: 0.2,
-    "Tot sum": 24000, "Tot size": 24000, Min: 40, Max: 500, AVG: 200, Std: 110,
+    Header_Length: 32, Time_To_Live: 64, Rate: 6366, Number: 10, IAT: 0.000157,
+    "Tot sum": 1080, "Tot size": 108, Min: 66, Max: 150, AVG: 108, Std: 44,
     IPv: 1,
-    fin_flag_number: 1, syn_flag_number: 1, rst_flag_number: 0,
+    fin_flag_number: 1, syn_flag_number: 0, rst_flag_number: 0,
     psh_flag_number: 1, ack_flag_number: 1, ece_flag_number: 0, cwr_flag_number: 0,
-    ack_count: 120, syn_count: 60, fin_count: 55, rst_count: 2,
+    ack_count: 10, syn_count: 0, fin_count: 5, rst_count: 0,
     HTTP: 0, HTTPS: 0, DNS: 0, Telnet: 0, SMTP: 0, SSH: 1, IRC: 0,
-    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 0
+    TCP: 1, UDP: 0, DHCP: 0, ARP: 0, ICMP: 0, IGMP: 0, LLC: 1
   }
 };
 
