@@ -1,17 +1,13 @@
 """
 run_pipeline.py
-==============================
-One-command full pipeline. Includes all three fixes:
-  - FIX 1: deduplication before splitting
-  - FIX 2: Protocol Type one-hot encoding
-  - FIX 3: Variance dropped + RobustScaler
+===============
+Runs the full IoT IDS training pipeline in one command.
 
-Usage
------
-    python run_pipeline.py                                    # demo data
-    python run_pipeline.py --real-data                        # 40% sample for all
-    python run_pipeline.py --real-data --lr-sample-frac 0.30  # GB=40%, LR=30%
-    python run_pipeline.py --skip-train                       # eval only
+Usage:
+    python run_pipeline.py                      # demo data (no dataset needed)
+    python run_pipeline.py --real-data          # 40% sample of CICIoT2023
+    python run_pipeline.py --real-data --lr-sample-frac 0.30
+    python run_pipeline.py --skip-train         # re-evaluate saved models
     python run_pipeline.py --real-data --models gb --tasks binary 8class
 """
 
@@ -104,7 +100,6 @@ def step_preprocess(df):
     from src.models.model_utils import save_class_names
     from src.data.label_mapping import BINARY_CLASS_NAMES, CATEGORY_CLASS_NAMES, FINE_CLASS_NAMES
 
-    log.info("FIX 1: Deduplicating...")
     df = deduplicate(df, label_col="label", random_state=42)
 
     train_df, val_df, test_df = create_splits(
@@ -116,7 +111,6 @@ def step_preprocess(df):
     X_train_raw, _ = get_X_y(train_df, "binary")
     os.makedirs("models", exist_ok=True)
 
-    log.info("FIX 2+3: Fitting preprocessor (one-hot + RobustScaler)...")
     preprocessor = build_and_fit_preprocessor(X_train_raw, save_path="models/preprocessor.pkl")
 
     splits_data = {}
@@ -270,9 +264,7 @@ def step_streaming():
 
 def main():
     args = parse_args()
-    log.info("╔══════════════════════════════════════════════╗")
-    log.info("║  IoT IDS Pipeline v2 — All Fixes Applied    ║")
-    log.info("╚══════════════════════════════════════════════╝")
+    log.info("IoT IDS Pipeline starting...")
 
     lr_frac = args.lr_sample_frac if args.lr_sample_frac else args.sample_frac
     gb_frac = args.sample_frac

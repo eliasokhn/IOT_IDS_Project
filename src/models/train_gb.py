@@ -1,43 +1,15 @@
 """
-train_gb.py  (v5 — GPU-aware + checkpoint/resume + BENIGN-weighted)
-===================================================================
-Train Gradient Boosting with optional GPU acceleration and pause/resume.
+train_gb.py
+===========
+Train Gradient Boosting with GPU acceleration and checkpoint/resume support.
 
-GPU path A: LightGBM  device='gpu'                      — fastest, recommended
-GPU path B: XGBoost   device='cuda'                      — fallback when LGBM crashes
-CPU path:   sklearn HistGradientBoostingClassifier        — always works
+Falls back in order: LightGBM GPU → XGBoost GPU → sklearn HistGBM CPU.
+LightGBM GPU has a known issue with heavily-weighted imbalanced data so
+XGBoost is used as the first fallback. Each step is logged explicitly.
 
-FALLBACK CHAIN
---------------
-LightGBM GPU is tried first. It has a known bug on GPU with heavily
-weighted imbalanced data (empty-node split assertion failure). When it
-crashes, XGBoost GPU is tried next. Only if that also fails does the
-code fall back to CPU sklearn. Every step is logged explicitly.
-
-BENIGN WEIGHT BOOST
--------------------
-In addition to class_weight='balanced', BENIGN samples receive an extra
-multiplier (benign_weight_multiplier in model_config.yaml, default 2.5).
-
-Why this matters per task:
-  binary  : BENIGN balanced weight ~21x, boost gives ~52x → modest FPR gain
-  8class  : BENIGN balanced weight  ~5x, boost gives ~13x → meaningful FPR gain
-  34class : BENIGN balanced weight ~1.3x, boost gives ~3x → significant FPR gain
-            (34-class BENIGN is dangerously close to mid-size attack classes
-            because it has 112K rows vs rare attacks at 1-2K rows)
-
-BENIGN class index by task:
-  binary  → 0  (BINARY_MAP["BENIGN"] = 0)
-  8class  → 0  (CATEGORY_MAP["BENIGN"] = 0)
-  34class → 1  (FINE_CLASS_NAMES sorted: BACKDOOR_MALWARE=0, BENIGN=1)
-
-PAUSE / RESUME
---------------
-LightGBM supports resuming from a checkpoint via init_model.
-Every `checkpoint_every` trees, a checkpoint file is saved to:
-    models/checkpoints/gb_{task}_checkpoint.txt
-
-To force a fresh start: delete the checkpoint file or set resume: false.
+BENIGN samples get an extra weight multiplier on top of class_weight='balanced'
+to reduce false positive rate, especially for the 34-class task where BENIGN's
+balanced weight is only ~1.3x (almost the same as a mid-size attack class).
 """
 
 import logging
@@ -192,17 +164,7 @@ def _compute_sample_weights(
     task: str,
     benign_multiplier: float = 1.0,
 ) -> np.ndarray:
-    """
-    Compute per-sample weights: class_weight='balanced' base, plus an optional
-    extra multiplier on BENIGN samples.
-
-    Why the BENIGN boost matters:
-      - 34-class: BENIGN balanced weight is only ~1.3x (same as mid-size attack class).
-        The ultra-rare attacks (BACKDOOR_MALWARE ~128x, XSS ~90x) dominate the loss,
-        leaving BENIGN underweighted → high FPR. A 2-3x boost corrects this.
-      - 8-class: BENIGN at ~5x is better but a boost still reduces FPR meaningfully.
-      - binary: BENIGN already at ~21x; boost is conservative (minor FPR gain).
-    """
+    """Balanced sample weights with optional extra multiplier on BENIGN samples."""
     from sklearn.utils.class_weight import compute_sample_weight
     weights = compute_sample_weight(class_weight="balanced", y=y).astype(np.float32)
     if benign_multiplier != 1.0:

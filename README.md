@@ -1,112 +1,25 @@
-# Streaming IoT Intrusion Detection with Drift Monitoring
+# IoT Intrusion Detection System (IDS)
 
-A university final project that detects malicious IoT network traffic using machine learning.
-Trained on the **CICIoT2023** dataset (~45M records, 34 classes).
+ML-based intrusion detection for IoT network traffic, trained on the **CICIoT2023** dataset
+(University of New Brunswick — ~45 million records, 34 attack classes).
 
----
-
-## What this project does
-
-- Classifies IoT network flows as **Benign** or one of **33 attack types**
-- Three classification levels: binary (2), family (8), fine-grained (34)
-- Two models: **Logistic Regression** (baseline) vs **Gradient Boosting** (stronger)
-- **Streaming simulation** with real-time drift monitoring across micro-batches
-- Deployable **FastAPI inference service** packaged in Docker
+Deployed as a **FastAPI REST service** packaged in Docker. Pre-trained models are included
+— no dataset download required to run inference.
 
 ---
 
-## Dataset
-
-**CICIoT2023** — University of New Brunswick  
-Download: https://www.unb.ca/cic/datasets/iotdataset-2023.html  
-Place all CSV files inside `data/raw/`.
-
-~45 million network flow records — 1 benign class + 33 attack types.
-
----
-
-## Quick Start (Without Real Dataset)
-
-The project includes a **synthetic demo mode** that mirrors the real dataset structure.
-You can run the full pipeline immediately without downloading anything.
+## Docker — Quickest way to run
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/YOUR_ORG/iot-ids-project.git
-cd iot-ids-project
+# Pull and run the pre-built image
+docker pull alimssw/iot-ids:latest
+docker run -p 8000:8000 alimssw/iot-ids:latest
 
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Run the full pipeline (uses synthetic demo data)
-python run_pipeline.py
-
-# 4. Start the API
-uvicorn src.serving.api:app --reload --host 0.0.0.0 --port 8000
-# Visit http://localhost:8000/docs
+# Open the interactive API docs
+# http://localhost:8000/docs
 ```
 
----
-
-## Full Setup (With Real Dataset)
-
-```bash
-# 1. Download CICIoT2023 CSVs → place in data/raw/
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Run notebooks in order (in Google Colab or locally):
-#    notebooks/01_data_exploration.py
-#    notebooks/02_preprocessing.py
-#    notebooks/03_train_logistic.py
-#    notebooks/04_train_gradient_boost.py
-#    notebooks/05_evaluation.py
-#    notebooks/06_streaming_demo.py
-
-# In each notebook, set USE_DEMO = False to use the real dataset.
-```
-
----
-
-## Running Notebooks in Google Colab
-
-```python
-# Cell 1: Clone and set up
-!git clone https://github.com/YOUR_ORG/iot-ids-project.git
-%cd iot-ids-project
-!pip install -r requirements.txt
-
-# Cell 2: Mount Drive (if data is on Drive)
-from google.colab import drive
-drive.mount('/content/drive')
-
-# Cell 3: Run the notebook script
-%run notebooks/01_data_exploration.py
-```
-
----
-
-## Running Tests
-
-```bash
-pytest tests/ -v
-```
-
-All tests pass without the real dataset or trained models.
-
----
-
-## API Usage
-
-### Start the server
-
-```bash
-uvicorn src.serving.api:app --reload --host 0.0.0.0 --port 8000
-```
-
-### Single prediction
-
+**Test with a single request:**
 ```bash
 curl -X POST http://localhost:8000/predict \
   -H "Content-Type: application/json" \
@@ -115,61 +28,176 @@ curl -X POST http://localhost:8000/predict \
       "flow_duration": 1.23,
       "total_fwd_packets": 10.0,
       "total_bwd_packets": 8.0,
+      "total_length_fwd_packets": 1500.0,
+      "total_length_bwd_packets": 900.0,
       "flow_bytes_per_sec": 2400.5,
+      "flow_packets_per_sec": 14.6,
+      "fwd_packet_length_mean": 150.0,
+      "bwd_packet_length_mean": 112.5,
       "syn_flag_count": 1.0
     }
   }'
 ```
 
-### Batch prediction
-
+**Switch model or task at runtime:**
 ```bash
-curl -X POST http://localhost:8000/predict_batch \
-  -H "Content-Type: application/json" \
-  -d '{"records": [{"flow_duration": 1.2, "total_fwd_packets": 5.0}, ...]}'
+# Gradient Boosting, 8-class attack families
+docker run -p 8000:8000 -e MODEL_NAME=gb -e TASK=8class amoussawi/iot-ids:latest
+
+# Logistic Regression, all 34 fine-grained classes
+docker run -p 8000:8000 -e MODEL_NAME=lr -e TASK=34class amoussawi/iot-ids:latest
 ```
 
-### Health check
-
-```bash
-curl http://localhost:8000/health
-```
-
-Visit **http://localhost:8000/docs** for the full interactive Swagger UI.
+Available `MODEL_NAME`: `gb` (Gradient Boosting), `lr` (Logistic Regression)  
+Available `TASK`: `binary`, `8class`, `34class`
 
 ---
 
-## Docker
+## What this project does
 
-### Pull and run the pre-built image
+- Classifies IoT network flows as **Benign** or one of **33 attack types**
+- Three classification granularities in one pipeline:
+  - **Binary** — Benign vs. Malicious (2 classes)
+  - **8-class** — Benign + 7 attack families (DDoS, DoS, Mirai, Recon, Spoofing, Web, BruteForce)
+  - **34-class** — Benign + all 33 individual attack subtypes
+- Two models trained per task (6 total): **Logistic Regression** (baseline) and **Gradient Boosting** (XGBoost)
+- **Streaming simulation** with real-time drift monitoring across micro-batches
+- Deployable **FastAPI inference service** packaged in Docker
 
-```bash
-docker pull YOUR_DOCKERHUB_USERNAME/iot-ids:latest
-docker run -p 8000:8000 YOUR_DOCKERHUB_USERNAME/iot-ids:latest
+---
+
+## Results
+
+**Primary metric: Macro F1** — weights all classes equally, essential for heavily imbalanced security data.
+Evaluated on a held-out 15% test set (~1.33M samples) from the CICIoT2023 dataset.
+
+### Binary (Benign vs. Malicious)
+
+| Model | Accuracy | Macro F1 | ROC-AUC | FPR (Benign) |
+|-------|----------|----------|---------|--------------|
+| Logistic Regression | 95.5% | 0.828 | 0.9896 | 0.06% |
+| **Gradient Boosting** | **97.4%** | **0.884** | **0.9965** | **0.12%** |
+
+### 8-Class (Attack Families)
+
+| Model | Accuracy | Macro F1 |
+|-------|----------|----------|
+| Logistic Regression | 70.9% | 0.529 |
+| **Gradient Boosting** | **79.0%** | **0.667** |
+
+Top performing classes (GB): Mirai (F1=1.00), Spoofing (0.89), DDoS (0.81)  
+Hardest classes: Web (0.19), BruteForce (0.21) — severely underrepresented
+
+### 34-Class (Fine-Grained Attack Types)
+
+| Model | Accuracy | Macro F1 |
+|-------|----------|----------|
+| Logistic Regression | 69.2% | 0.473 |
+| **Gradient Boosting** | **78.5%** | **0.596** |
+
+Top performing classes (GB): DDOS-ICMP_FLOOD (F1=1.00), MIRAI-GREETH/GREIP/UDPPLAIN (~1.00), DDOS-PSHACK_FLOOD (~1.00)  
+Hardest classes: Ultra-rare attacks (<200 samples) — RECON-PINGSWEEP, XSS, UPLOADING_ATTACK
+
+> **Note on rare classes:** The CICIoT2023 dataset is severely imbalanced (BENIGN ~862K rows, XSS ~189 rows,
+> 4500× ratio). All models use `class_weight='balanced'` + BENIGN weight boost to improve fairness across classes.
+
+---
+
+## API Reference
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/health` | GET | Liveness check — always 200 if server is up |
+| `/info` | GET | Model info, class names, feature list |
+| `/classes` | GET | List class names for the loaded task |
+| `/predict` | POST | Classify one traffic record |
+| `/predict_batch` | POST | Classify up to 10,000 records |
+| `/docs` | GET | Interactive Swagger UI |
+
+### Single prediction response
+
+```json
+{
+  "predicted_class": 1,
+  "predicted_label": "Malicious",
+  "probabilities": {"Benign": 0.02, "Malicious": 0.98},
+  "is_malicious": true,
+  "model": "gb",
+  "task": "binary",
+  "latency_ms": 4.2
+}
 ```
 
-### Build locally
+### Batch prediction response
+
+```json
+{
+  "predictions": [...],
+  "n_records": 100,
+  "n_malicious": 12,
+  "alert_rate": 0.12,
+  "latency_ms": 18.5,
+  "model": "gb",
+  "task": "binary"
+}
+```
+
+---
+
+## Local Setup (Without Docker)
 
 ```bash
+# 1. Clone
+git clone https://github.com/YOUR_ORG/iot-ids-project.git
+cd iot-ids-project
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Start the API (pre-trained models are included)
+uvicorn src.serving.api:app --reload --host 0.0.0.0 --port 8000
+
+# Visit http://localhost:8000/docs
+```
+
+---
+
+## Running the Full Pipeline (Requires Dataset)
+
+The CICIoT2023 dataset (~45 GB) must be downloaded separately.
+
+**Download:** https://www.unb.ca/cic/datasets/iotdataset-2023.html  
+**Place all 63 CSV files in:** `data/raw/`
+
+```bash
+# First run — merges all 63 CSVs into parquet, trains all 6 models
+python run_pipeline.py --real-data
+
+# Re-run with a different sample fraction (parquet already built, reused)
+python run_pipeline.py --real-data --sample-frac 0.20
+
+# Train only specific models/tasks
+python run_pipeline.py --real-data --models gb --tasks binary 8class
+
+# Skip training, just re-evaluate saved models
+python run_pipeline.py --skip-train
+```
+
+---
+
+## Build Docker Image Locally
+
+```bash
+# Build
 docker build -t iot-ids:latest .
+
+# Run
 docker run -p 8000:8000 iot-ids:latest
-```
 
-### Change model or task at runtime
-
-```bash
-# Use 8-class GB model
-docker run -p 8000:8000 -e MODEL_NAME=gb -e TASK=8class iot-ids:latest
-
-# Use LR binary model
-docker run -p 8000:8000 -e MODEL_NAME=lr -e TASK=binary iot-ids:latest
-```
-
-### Push to Docker Hub
-
-```bash
-docker tag iot-ids:latest YOUR_DOCKERHUB_USERNAME/iot-ids:latest
-docker push YOUR_DOCKERHUB_USERNAME/iot-ids:latest
+# Tag and push to Docker Hub (replace YOUR_USERNAME)
+docker login
+docker tag iot-ids:latest YOUR_USERNAME/iot-ids:latest
+docker push YOUR_USERNAME/iot-ids:latest
 ```
 
 ---
@@ -179,70 +207,61 @@ docker push YOUR_DOCKERHUB_USERNAME/iot-ids:latest
 ```
 iot-ids-project/
 ├── README.md                    ← This file
-├── architecture.md              ← System architecture
-├── requirements.txt
-├── Dockerfile
+├── requirements.txt             ← Python dependencies
+├── Dockerfile                   ← Docker image definition
 ├── run_pipeline.py              ← One-command full pipeline runner
 │
 ├── configs/
-│   ├── data_config.yaml         ← Dataset paths and sampling config
-│   ├── model_config.yaml        ← Hyperparameters for both models
+│   ├── data_config.yaml         ← Dataset paths, sample fraction, feature columns
+│   ├── model_config.yaml        ← LR/GB hyperparameters, GPU settings
 │   └── monitoring_config.yaml   ← Drift thresholds and batch sizes
 │
-├── data/
-│   ├── README.md                ← Download instructions
-│   ├── raw/                     ← Raw CSVs (not committed)
-│   └── processed/               ← Parquet, split indices (not committed)
-│
-├── notebooks/                   ← Run in order (Colab or local)
-│   ├── 01_data_exploration.py
-│   ├── 02_preprocessing.py
-│   ├── 03_train_logistic.py
-│   ├── 04_train_gradient_boost.py
-│   ├── 05_evaluation.py
-│   └── 06_streaming_demo.py
-│
 ├── src/
-│   ├── data/                    ← Loader, label mapping, splitter, validation
-│   ├── features/                ← Preprocessor (scaler + imputer)
-│   ├── models/                  ← LR and GB training scripts
-│   ├── evaluation/              ← Metrics, confusion matrices, plots
-│   ├── serving/                 ← FastAPI app and Predictor class
-│   └── monitoring/              ← DriftMonitor and streaming simulation
+│   ├── data/                    ← CSV→Parquet loader, label mapping, splitter
+│   ├── features/                ← Dedup, one-hot encoding, RobustScaler, PowerTransformer
+│   ├── models/                  ← LR (cuML/sklearn) and GB (XGBoost/LightGBM/sklearn)
+│   ├── evaluation/              ← Macro F1, confusion matrices, recall heatmaps
+│   ├── serving/                 ← FastAPI app and Predictor inference class
+│   └── monitoring/              ← Z-score drift detection, streaming simulation
 │
-├── models/                      ← Trained .pkl artifacts (after training)
-├── reports/                     ← Metrics JSON, plots PNG, monitoring logs
-├── slides/                      ← Final presentation
-├── docs/                        ← One-page report
-└── tests/                       ← Pytest unit tests
+├── models/                      ← Pre-trained artifacts (6 models + preprocessor)
+│   ├── preprocessor.pkl         ← Fitted RobustScaler + PowerTransformer pipeline
+│   ├── lr_binary.pkl            ← Logistic Regression — binary task
+│   ├── lr_8class.pkl            ← Logistic Regression — 8-class task
+│   ├── lr_34class.pkl           ← Logistic Regression — 34-class task
+│   ├── gb_binary.pkl            ← Gradient Boosting (XGBoost) — binary task
+│   ├── gb_8class.pkl            ← Gradient Boosting — 8-class task
+│   └── gb_34class.pkl           ← Gradient Boosting — 34-class task
+│
+├── reports/                     ← Metrics JSON, confusion matrix PNGs
+├── notebooks/                   ← Step-by-step pipeline notebooks (01–06)
+└── data/
+    ├── raw/                     ← 63 Merged*.csv files (NOT in git — download separately)
+    └── processed/               ← Generated parquet and split files (NOT in git)
 ```
 
 ---
 
-## Results Summary
+## Dataset
 
-After running the full pipeline, results are saved in `reports/model_comparison.csv`.
-
-**Primary metric: Macro F1** (treats all 34 classes equally, critical for imbalanced security data)
-
-| Task | LR Macro F1 | GB Macro F1 | Winner |
-|------|-------------|-------------|--------|
-| Binary (2-class) | — | — | — |
-| Family (8-class) | — | — | — |
-| Fine-grained (34-class) | — | — | — |
-
-*Fill in after running the training notebooks.*
+**CICIoT2023** — University of New Brunswick  
+- ~45 million network flow records
+- 1 benign class + 33 attack subtypes across 7 attack families
+- 39 numeric features + Protocol Type
+- Download: https://www.unb.ca/cic/datasets/iotdataset-2023.html
+- Reference paper: https://www.mdpi.com/1424-8220/23/13/5941
 
 ---
 
-## Team
+## Key Design Decisions
 
-| Member | Role |
-|--------|------|
-| Member 1 | Data & Preprocessing |
-| Member 2 | Model Training & Evaluation |
-| Member 3 | Deployment & Docker |
-| Member 4 | Documentation & Presentation |
+| Decision | Why |
+|----------|-----|
+| Deduplicate **before** splitting | ~5% of rows are exact duplicates across files. Splitting first would leak test rows into training. |
+| Split **once** on 34-class labels | Reused for binary and 8-class to prevent row-level leakage across tasks. |
+| RobustScaler + PowerTransformer | Variance column has values up to 46M — StandardScaler would produce near-infinite scaled values. RobustScaler uses median+IQR; PowerTransformer normalizes heavy-tailed features for LR. |
+| `class_weight='balanced'` everywhere | 4500× imbalance ratio. Macro F1 requires good recall on rare classes. |
+| Protocol Type one-hot encoded | Protocol numbers {0,1,6,17,47} are nominal (IP protocol IDs), not ordinal. Treating them as numeric implies false ordering. |
 
 ---
 
@@ -250,4 +269,3 @@ After running the full pipeline, results are saved in `reports/model_comparison.
 
 - CICIoT2023 dataset: https://www.unb.ca/cic/datasets/iotdataset-2023.html
 - CICIoT2023 paper: https://www.mdpi.com/1424-8220/23/13/5941
-- Deadline: Monday, April 20th at 12 PM noon

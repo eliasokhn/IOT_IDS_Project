@@ -1,0 +1,38 @@
+# Raw dataset and processed outputs — never ship in Docker image
+data/
+
+# Git internals
+.git/
+.gitignore
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Claude / project notes
+.claude/
+CLAUDE.md
+SESSION_NOTES*.txt
+architecture.md
+
+# Model checkpoints (empty, not needed for inference)
+models/checkpoints/

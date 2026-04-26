@@ -51,9 +51,10 @@ htmlcov/
 *.log
 logs/
 
-# Docker
-.dockerignore
 
 #Documentation 
 CLAUDE.md
 /.claude
+SESSION_NOTES_2.txt
+SESSION_NOTES.txt
+architecture.md

@@ -1,45 +1,10 @@
 """
 gpu_utils.py
 ============
-GPU detection, memory management, and safety utilities.
+GPU detection, memory management, and training utilities.
 
-Addresses every GPU failure mode listed in the project requirements:
-
-DETECTION ISSUES
-  - GPU not detected by framework       → detect_gpu() with multi-library fallback
-  - Code silently running on CPU        → explicit logging of every device decision
-  - Framework/CUDA version mismatches   → version checks with clear error messages
-
-MEMORY ISSUES
-  - Out-of-memory (OOM)                 → safe_gpu_call() with OOM catch + fallback
-  - VRAM fragmentation                  → clear_gpu_memory() called between experiments
-  - Memory leaks (train/inference)      → context managers that force cleanup
-  - Optimizer/gradient memory growth    → only relevant to neural nets; flagged for LR/GB
-  - Old Colab/notebook VRAM not freed   → explicit gc + cache clear on every cleanup call
-  - Other apps occupying VRAM           → get_gpu_memory_info() shows available before start
-  - Storing predictions on GPU          → all predictions always moved to CPU immediately
-
-STABILITY ISSUES
-  - Thermal throttling                  → logged if GPU temp available
-  - Deadlocks / hangs                   → timeout guard in safe_gpu_call()
-  - Mixed precision instability         → not used; cuML/LightGBM use float32 natively
-  - NaN / Inf from bad preprocessing    → validate_array() checks before any GPU call
-  - Exploding gradients                 → not applicable to LR/GBM (no backprop)
-  - Corrupted checkpoint                → atomic save (write temp → rename)
-  - Reproducibility                     → seed set in GPU context
-
-PERFORMANCE ISSUES
-  - Low GPU utilisation                 → batch size guide in GpuConfig
-  - Dataloader bottleneck               → prefetch + pinned memory advice
-  - Slow disk I/O                       → Parquet + memory-mapped arrays
-  - CPU preprocessing bottleneck        → preprocessing always on CPU (correct)
-  - Training slower than expected       → benchmark_gpu() helper
-
-ENVIRONMENT ISSUES
-  - Multiprocessing / dataloader workers → n_jobs=1 when GPU active (avoid fork issues)
-  - cuDNN incompatible behaviour         → deterministic mode flag
-  - Random reproducibility               → seed_everything() utility
-  - Disk space for checkpoints           → check_disk_space() before save
+Handles backend selection (cuML > LightGBM GPU > XGBoost GPU > CPU sklearn),
+OOM fallback, memory cleanup between runs, input validation, and atomic saves.
 """
 
 import gc
@@ -67,17 +32,7 @@ BACKEND_XGB    = "xgboost"    # XGBoost GPU  (fallback GBM)
 
 @dataclass
 class GpuConfig:
-    """
-    Central GPU configuration. Read by train_lr.py and train_gb.py.
-    Set via configs/model_config.yaml or environment variables.
-
-    VRAM guidance (adjust batch_size_mb to fit your GPU):
-      - 4 GB VRAM  (GTX 1650, etc.)     → batch_size_mb = 512
-      - 6 GB VRAM  (RTX 3060, etc.)     → batch_size_mb = 1024
-      - 8 GB VRAM  (RTX 3070, etc.)     → batch_size_mb = 2048
-      - 12 GB VRAM (RTX 3080 Ti, etc.)  → batch_size_mb = 4096
-      - 24 GB VRAM (RTX 3090, etc.)     → batch_size_mb = 8192
-    """
+    """GPU configuration shared by train_lr.py and train_gb.py."""
     # Training device
     use_gpu:          bool  = True    # Try GPU; falls back to CPU if unavailable
     gpu_id:           int   = 0       # Which GPU to use (0 = first GPU)
@@ -108,18 +63,7 @@ class GpuConfig:
 # ── GPU Detection ──────────────────────────────────────────────────────────────
 
 def detect_gpu(cfg: GpuConfig | None = None) -> GpuConfig:
-    """
-    Detect available GPU and choose the best backend.
-
-    Priority:
-      1. cuML (RAPIDS)   → GPU-accelerated LR, best for sklearn-compatible pipeline
-      2. LightGBM GPU    → GPU-accelerated GBM
-      3. XGBoost GPU     → fallback GBM GPU
-      4. CPU only        → if nothing is available or use_gpu=False
-
-    All decisions are logged explicitly — the system NEVER silently falls back
-    without printing a clear message.
-    """
+    """Detect available GPU and pick the best backend (cuML > LightGBM > XGBoost > CPU)."""
     if cfg is None:
         cfg = GpuConfig()
 
@@ -304,15 +248,7 @@ def get_gpu_memory_info(gpu_id: int = 0) -> dict[str, float]:
 
 
 def clear_gpu_memory(gpu_id: int = 0) -> None:
-    """
-    Aggressively free GPU memory.
-
-    Handles:
-    - VRAM fragmentation
-    - Memory leaks between training runs
-    - Old Colab/notebook contexts not freeing memory
-    - Predictions/embeddings accidentally left on GPU
-    """
+    """Free GPU memory via gc, PyTorch cache, and CuPy memory pools if available."""
     # Python garbage collection first
     gc.collect()
 
@@ -346,14 +282,7 @@ def clear_gpu_memory(gpu_id: int = 0) -> None:
 
 @contextmanager
 def gpu_memory_context(cfg: GpuConfig, label: str = ""):
-    """
-    Context manager that clears GPU memory before AND after a block.
-    Use this around each training experiment to prevent memory leaks.
-
-    Usage:
-        with gpu_memory_context(cfg, "LR binary"):
-            model = train_logistic_regression(...)
-    """
+    """Context manager that clears GPU memory before and after a training block."""
     if cfg.backend != BACKEND_NONE:
         log.info(f"[GPU] Starting: {label}")
         clear_gpu_memory(cfg.gpu_id)
@@ -402,14 +331,7 @@ def gpu_memory_context(cfg: GpuConfig, label: str = ""):
 # ── Input Validation ──────────────────────────────────────────────────────────
 
 def validate_array(X: np.ndarray, name: str = "X") -> None:
-    """
-    Check for NaN, Inf, and extreme values before sending to GPU.
-
-    Prevents:
-    - NaN/Inf loss values
-    - Numerical instability from bad preprocessing
-    - Exploding gradients (not applicable to LR/GBM but checked anyway)
-    """
+    """Check for NaN, Inf, and extreme values before sending data to GPU."""
     if np.isnan(X).any():
         n_nan = np.isnan(X).sum()
         raise ValueError(
@@ -436,10 +358,7 @@ def validate_array(X: np.ndarray, name: str = "X") -> None:
 # ── Safe Disk Save ─────────────────────────────────────────────────────────────
 
 def check_disk_space(path: str, min_gb: float = 2.0) -> None:
-    """
-    Verify sufficient disk space before saving a model checkpoint.
-    Prevents partial/corrupted writes.
-    """
+    """Raise OSError if free disk space is below min_gb before saving a checkpoint."""
     try:
         import shutil
         stat = shutil.disk_usage(Path(path).parent if "." in Path(path).name else path)
@@ -458,14 +377,7 @@ def check_disk_space(path: str, min_gb: float = 2.0) -> None:
 
 
 def atomic_save(obj: Any, path: str, min_disk_gb: float = 2.0) -> None:
-    """
-    Save object atomically: write to temp file, then rename.
-
-    Prevents corrupted checkpoints from:
-    - Interrupted saves
-    - Disk full during write
-    - Power loss / crash during write
-    """
+    """Save object atomically: write to temp file then rename to avoid corrupted checkpoints."""
     import joblib
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -485,13 +397,7 @@ def atomic_save(obj: Any, path: str, min_disk_gb: float = 2.0) -> None:
 # ── Reproducibility ────────────────────────────────────────────────────────────
 
 def seed_everything(seed: int = 42) -> None:
-    """
-    Set all random seeds for reproducibility across CPU and GPU.
-
-    Addresses:
-    - Random reproducibility issues across runs
-    - Different results between GPU and CPU (due to non-deterministic ops)
-    """
+    """Set random seeds for Python, NumPy, and CUDA for reproducibility."""
     import random
     random.seed(seed)
     np.random.seed(seed)

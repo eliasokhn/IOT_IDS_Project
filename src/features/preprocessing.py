@@ -1,31 +1,15 @@
 """
-preprocessing.py  (v4 - merged best of both approaches)
-=========================================================
-Combines all fixes from our project with the Yeo-Johnson improvement
-from the external preprocessing pipeline analysis.
+preprocessing.py
+================
+Feature preprocessing pipeline for IoT IDS.
 
-FIX 1 - DUPLICATES          : deduplicate() — exact + conflicting label removal
-FIX 2 - PROTOCOL TYPE        : one-hot encode {0,1,6,17,47} instead of ordinal
-FIX 3 - VARIANCE DROPPED     : Variance = Std^2 exactly, extreme outlier source
-FIX 4 - ROBUST SCALER        : RobustScaler (median+IQR) instead of StandardScaler
-FIX 5 - YEO-JOHNSON (new)    : PowerTransformer on genuinely skewed continuous
-                               features only. Improves LR significantly by making
-                               heavy-tailed features approximately Gaussian.
-                               Skipped for sparse binary indicators (SSH, Telnet,
-                               flag columns) which are mostly-zero and not truly
-                               continuous — applying power transform to them is
-                               meaningless and wastes compute.
-FIX 6 - CLIP AFTER SCALE     : clip output to [-20, 20] to prevent extreme scaled
-                               values from causing numerical instability in LR.
-
-Pipeline order (all fit on training data only):
-  Drop Variance
-  One-hot Protocol Type
-  Replace inf with col max
-  Median impute NaN
-  PowerTransformer (Yeo-Johnson) on skewed continuous features only
-  RobustScaler on all features
-  Clip to [-20, 20]
+Pipeline (fit on training data only):
+  - Drop Variance column (redundant: Variance = Std^2 exactly)
+  - One-hot encode Protocol Type (values are nominal IP protocol IDs, not ordinal)
+  - Replace inf values, median-impute NaN
+  - PowerTransformer (Yeo-Johnson) on skewed continuous features
+  - RobustScaler on all features (median+IQR, robust to outliers)
+  - Clip output to [-20, 20]
 """
 
 import hashlib

@@ -1,22 +1,12 @@
 """
-loader.py  (v2 — fixed for real CICIoT2023 data)
-=================================================
-Handles 63 Merged CSV files correctly.
+loader.py
+=========
+Loads the CICIoT2023 dataset from 63 Merged*.csv files.
 
-KEY INSIGHT from data inspection of Merged52.csv:
-  - Each file already contains all 34 classes (verified: 34/34 present)
-  - Class counts differ per file (e.g. DDOS dominates, XSS has only 2-3 rows)
-  - The label column is named 'Label' (capital L) in the real files
-  - Duplicate rows: ~5% per file (handled in preprocessing.py)
-
-IMBALANCE STRATEGY across 63 files:
-  - Load ALL files first (concat everything)
-  - Deduplicate globally (not per-file) — duplicates may span file boundaries
-  - Sample AFTER global dedup using stratified per-class sampling
-  - This guarantees rare classes (XSS ~189 total, BruteForce ~1,134 total)
-    are never accidentally excluded by per-file sampling
-  - The split is then done on the GLOBAL pool with stratification on
-    the 34-class label — this is the ONLY correct way to handle this
+Merges all files into a single Parquet (one-time, skipped if already exists),
+then loads with stratified per-class sampling to preserve rare classes like XSS.
+Deduplication is done globally after loading — not per-file — because duplicate
+rows can span file boundaries.
 """
 
 import logging

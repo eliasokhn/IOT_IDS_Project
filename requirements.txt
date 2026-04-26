@@ -19,6 +19,10 @@ httpx==0.27.0
 # ── Testing ────────────────────────────────────────────────────────────────────
 pytest==8.2.2
 
+# ── Gradient Boosting (required for loading trained models) ───────────────────
+# The trained gb_*.pkl models use XGBoostWrapper — xgboost must be installed.
+xgboost>=2.0.0
+
 # ── GPU — OPTIONAL (install the ones matching your setup) ─────────────────────
 #
 # Option A: LightGBM with GPU support (easiest — works on most systems)
@@ -26,11 +30,6 @@ pytest==8.2.2
 #   NOTE: LightGBM GPU requires CUDA toolkit installed on your system.
 #         The pip package auto-detects GPU. If GPU is not found, it runs on CPU.
 # lightgbm>=4.3.0
-#
-# Option B: XGBoost with GPU support (fallback)
-#   pip install xgboost
-#   GPU support is built-in since XGBoost 1.6
-# xgboost>=2.0.0
 #
 # Option C: RAPIDS cuML (best GPU acceleration, requires NVIDIA GPU + Linux)
 #   Install via conda:

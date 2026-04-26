@@ -1,20 +1,13 @@
 """
-train_lr.py  (v4 — GPU-aware + BENIGN-weighted)
-================================================
+train_lr.py
+===========
 Train Logistic Regression with optional GPU acceleration.
 
-GPU path:  cuML LogisticRegression (RAPIDS) — full sklearn-compatible API
-CPU path:  sklearn LogisticRegression        — identical results, no GPU needed
+GPU path:  cuML LogisticRegression (RAPIDS)
+CPU path:  sklearn LogisticRegression
 
-BENIGN WEIGHT BOOST
--------------------
-Uses compute_sample_weight("balanced") as base, then multiplies BENIGN samples
-by benign_weight_multiplier from model_config.yaml (default 2.5).
-
-This is critical for the 34-class task where BENIGN's balanced weight is only
-~1.3x — almost the same as a mid-size attack class — causing LR to almost
-ignore BENIGN boundaries, resulting in 97% FPR. The boost brings BENIGN to
-~3x, making it noticeably more important than DDoS classes (0.4x).
+Uses class_weight='balanced' as a base, then applies an extra multiplier
+on BENIGN samples from model_config.yaml to reduce the false positive rate.
 """
 
 import logging
@@ -106,12 +99,7 @@ def train_logistic_regression(
 
 
 def _resolve_multiplier(multiplier_cfg, task: str) -> float:
-    """
-    Resolve benign_weight_multiplier from config — supports both scalar and
-    per-task dict forms:
-      scalar: benign_weight_multiplier: 2.5
-      dict:   benign_weight_multiplier: {binary: 2.0, 8class: 2.5, 34class: 1.0}
-    """
+    """Resolve benign_weight_multiplier — supports scalar or per-task dict."""
     if isinstance(multiplier_cfg, dict):
         return float(multiplier_cfg.get(task, 1.0))
     return float(multiplier_cfg) if multiplier_cfg is not None else 1.0
@@ -194,9 +182,7 @@ def _train_cpu_lr(X_train, y_train, lr_cfg, task: str):
     benign_multiplier = _resolve_multiplier(lr_cfg.get("benign_weight_multiplier", 1.0), task)
     sample_weights    = _compute_sample_weights(y_train, task, benign_multiplier)
 
-    # Use class_weight=None because we pass explicit sample_weight that already
-    # includes both the balanced correction AND the BENIGN boost. Using both
-    # class_weight='balanced' AND sample_weight would double-count the balancing.
+    # class_weight=None because sample_weight already includes the balanced correction
     model = LogisticRegression(
         C=lr_cfg["C"],
         max_iter=lr_cfg["max_iter"],
